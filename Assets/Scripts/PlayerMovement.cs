@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     // VALUES
     public float playerCurrentSpeed { private set; get; } = 1.0f;
+    public float jumpStrength = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         if (!IsInit()) return;
 
         HandleMovement();
+        HandleJump();
     }
 
     private void FixedUpdate()
@@ -48,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
         MovementInput();
         HandlePlayerShape();
+        player.PassPlayerPosition(transform.position);
     }
 
     void MovementInput()
@@ -65,6 +68,14 @@ public class PlayerMovement : MonoBehaviour
         player.playerSprite.flipX = playerInput.x > 0.1 && playerBody.velocity.magnitude != 0 ? false : true;
     }
 
+    void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            Debug.Log("Jump");
+        }
+    }
+
     void HandlePlayerShape()
     {
 
@@ -74,13 +85,13 @@ public class PlayerMovement : MonoBehaviour
                 playerCurrentSpeed = player.defaultSpeed;
                 break;
             case PlayerManager.PlayerShape.GRAB:
-                playerCurrentSpeed = player.defaultSpeed;
+                playerCurrentSpeed = player.grabSpeed;
                 break;
             case PlayerManager.PlayerShape.CAT:
                 playerCurrentSpeed = player.catSpeed;
                 break;
             case PlayerManager.PlayerShape.FLY:
-                playerCurrentSpeed = player.defaultSpeed / 2;
+                playerCurrentSpeed = player.flySpeed;
                 break;
             default:
                 break;

@@ -58,9 +58,13 @@ public class PlayerManager : MonoBehaviour
 
     #region Attributes
     // VALUES
-    public float defaultSpeed { private set; get; } = 2f;
-    public float catSpeed { private set; get; } = 3.5f;
+    public float defaultSpeed = 2f;
+    public float grabSpeed = 2.5f;
+    public float catSpeed = 3.5f;
+    public float flySpeed = 3f;
     #endregion
+
+    public Vector3 playerPosition { get; private set; }
 
     void Start()
     {
@@ -70,6 +74,11 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         PlayerInput();
+    }
+
+    public void PassPlayerPosition(Vector3 pos)
+    {
+        playerPosition = pos;
     }
 
     void PlayerInput()
