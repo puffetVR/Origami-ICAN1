@@ -7,12 +7,14 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class PlayerMovement : MonoBehaviour
 {
     // VECTORS
-    Vector2 playerInput;
-    Vector2 playerMove;
+    private Vector2 playerInput;
+    private Vector2 playerVelocity;
+    [SerializeField] private float groundCheckDist = 1.0f;
+    [SerializeField] private LayerMask groundLayerMask;
 
     // REFERENCES
-    PlayerManager player;
-    Rigidbody2D playerBody;
+    private PlayerManager player;
+    private Rigidbody2D playerBody;
 
     // VALUES
     public float playerCurrentSpeed { private set; get; } = 1.0f;
@@ -51,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
         MovementInput();
         HandlePlayerShape();
         player.PassPlayerPosition(transform.position);
+
+        playerVelocity = playerBody.velocity;
     }
 
     void MovementInput()
@@ -61,19 +65,37 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
-        playerMove = new Vector2(playerInput.x, 0);
+        //playerMove = new Vector2(playerInput.x, playerBody.velocity.y);
 
-        playerBody.velocity = playerMove * playerCurrentSpeed;
+        //playerBody.velocity = playerMove * playerCurrentSpeed;
+        playerBody.velocity = new Vector2(playerInput.x * playerCurrentSpeed, playerBody.velocity.y);
 
-        player.playerSprite.flipX = playerInput.x > 0.1 && playerBody.velocity.magnitude != 0 ? false : true;
+        if (playerBody.velocity.x > 0) player.playerSprite.flipX = false;
+        if (playerBody.velocity.x < 0) player.playerSprite.flipX = true;
     }
 
     void HandleJump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             Debug.Log("Jump");
+            playerBody.AddForce(playerBody.transform.up * jumpStrength, ForceMode2D.Impulse);
         }
+    }
+
+    bool IsGrounded()
+    {
+        Vector2 playerOrigin = playerBody.transform.position;
+        Vector2 groundDirection = -playerBody.transform.up;
+
+        RaycastHit2D hit = Physics2D.Raycast(playerOrigin, groundDirection, groundCheckDist, groundLayerMask);
+        Color groundRayColor = hit.collider != null ? Color.green : Color.red;
+
+        Debug.DrawRay(playerOrigin, groundDirection * groundCheckDist, groundRayColor, 1);
+
+        if (hit.collider != null) return true;
+        else return false;
+        
     }
 
     void HandlePlayerShape()

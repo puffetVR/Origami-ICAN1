@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7341484702390813399}
   - component: {fileID: 8708424063559842525}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: playerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 624523760513533260}
   - component: {fileID: 2507083873484754023}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,6 +189,10 @@ MonoBehaviour:
   grabSprite: {fileID: 21300000, guid: 202dd861170313440b1d9b62a4c70951, type: 3}
   catSprite: {fileID: 21300000, guid: 8f29127e1de35464b9c2034e4e85b165, type: 3}
   flySprite: {fileID: 21300000, guid: d03613612eb72d8498e47f1ac3fbc9ed, type: 3}
+  defaultSpeed: 2
+  grabSpeed: 2.5
+  catSpeed: 3.5
+  flySpeed: 3
 --- !u!1 &4297830791350080503
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +298,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0017cbe584ba5c8458503b57869cc632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraFollowSpeed: 1
+  cameraZoom: 5
+  cameraZoomSpeed: 1
+  cameraTarget: {fileID: 2650197026509920139}
 --- !u!1 &6138474928411310088
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +314,7 @@ GameObject:
   - component: {fileID: 4274828795524273258}
   - component: {fileID: 2011159864758717705}
   - component: {fileID: 6828700256267712357}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,6 +349,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd214b6c67d1d74eb213144f97ad886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckDist: 1
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  jumpStrength: 4
 --- !u!61 &2011159864758717705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -402,7 +415,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 185a6cef41b78a545a3824433cd2bf71, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -422,7 +435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5739735284099533262}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
