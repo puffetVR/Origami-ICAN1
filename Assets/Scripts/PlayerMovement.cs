@@ -6,21 +6,22 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // INPUT
+    // VECTORS
     Vector2 playerInput;
+    Vector2 playerMove;
 
     // REFERENCES
     PlayerManager player;
-    Rigidbody playerBody;
+    Rigidbody2D playerBody;
 
     // VALUES
-    public float playerSpeed = 1.0f;
+    public float playerCurrentSpeed { private set; get; } = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerManager.instance;
-        playerBody = GetComponent<Rigidbody>();
+        playerBody = GetComponent<Rigidbody2D>();
     }
 
     bool IsInit()
@@ -43,7 +44,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!IsInit()) return;
+
         MovementInput();
+        HandlePlayerShape();
     }
 
     void MovementInput()
@@ -54,46 +58,33 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
-        Vector2 playerMove = Vector2.zero;
-        float playerSpeed = 0f;
+        playerMove = new Vector2(playerInput.x, 0);
+
+        playerBody.velocity = playerMove * playerCurrentSpeed;
+
+        player.playerSprite.flipX = playerInput.x > 0.1 && playerBody.velocity.magnitude != 0 ? false : true;
+    }
+
+    void HandlePlayerShape()
+    {
 
         switch (player.playerShape)
         {
             case PlayerManager.PlayerShape.DEFAULT:
+                playerCurrentSpeed = player.defaultSpeed;
                 break;
             case PlayerManager.PlayerShape.GRAB:
-                playerMove = new Vector2(playerInput.x, 0);
-                playerSpeed = player.defaultSpeed;
+                playerCurrentSpeed = player.defaultSpeed;
                 break;
             case PlayerManager.PlayerShape.CAT:
-                playerMove = new Vector2(playerInput.x, 0);
-                playerSpeed = player.catSpeed;
+                playerCurrentSpeed = player.catSpeed;
                 break;
             case PlayerManager.PlayerShape.FLY:
-                playerMove = new Vector2(0, playerInput.y);
-                playerSpeed = player.defaultSpeed / 2;
+                playerCurrentSpeed = player.defaultSpeed / 2;
                 break;
             default:
                 break;
         }
 
-        playerBody.AddForce(playerMove * playerSpeed, ForceMode.VelocityChange);
-    }
-
-    void HandleGravity()
-    {
-        switch (PlayerManager.instance.playerShape)
-        {
-            case PlayerManager.PlayerShape.DEFAULT:
-                break;
-            case PlayerManager.PlayerShape.GRAB:
-                break;
-            case PlayerManager.PlayerShape.CAT:
-                break;
-            case PlayerManager.PlayerShape.FLY:
-                break;
-            default:
-                break;
-        }
     }
 }

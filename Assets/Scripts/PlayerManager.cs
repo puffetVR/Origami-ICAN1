@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    #region Singleton
     public static PlayerManager instance;
 
     private void Awake()
@@ -10,8 +11,15 @@ public class PlayerManager : MonoBehaviour
 
         if (instance != this) Destroy(this);
     }
+    #endregion
 
+    #region Player Shape Enum
     public enum PlayerShape { DEFAULT, GRAB, CAT, FLY }
+    public SpriteRenderer playerSprite;
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] Sprite grabSprite;
+    [SerializeField] Sprite catSprite;
+    [SerializeField] Sprite flySprite;
 
     public PlayerShape playerShape
     {
@@ -26,24 +34,19 @@ public class PlayerManager : MonoBehaviour
     private PlayerShape _playerShape;
     void OnPlayerShapeChanged(PlayerShape shape)
     {
-        defaultShape.SetActive(false);
-        grabShape.SetActive(false);
-        catShape.SetActive(false);
-        flyShape.SetActive(false);
-
         switch (shape)
         {
             case PlayerShape.DEFAULT:
-                defaultShape.SetActive(true);
+                playerSprite.sprite = defaultSprite;
                 break;
             case PlayerShape.GRAB:
-                grabShape.SetActive(true);
+                playerSprite.sprite = grabSprite;
                 break;
             case PlayerShape.CAT:
-                catShape.SetActive(true);
+                playerSprite.sprite = catSprite;
                 break;
             case PlayerShape.FLY:
-                flyShape.SetActive(true);
+                playerSprite.sprite = flySprite;
                 break;
             default:
                 break;
@@ -51,20 +54,17 @@ public class PlayerManager : MonoBehaviour
 
         Debug.Log(shape);
     }
+    #endregion
 
-    // SHAPE FX
-    public GameObject defaultShape;
-    public GameObject grabShape;
-    public GameObject catShape;
-    public GameObject flyShape;
-
+    #region Attributes
     // VALUES
-    public float defaultSpeed = 0.1f;
-    public float catSpeed = 0.3f;
+    public float defaultSpeed { private set; get; } = 2f;
+    public float catSpeed { private set; get; } = 3.5f;
+    #endregion
 
     void Start()
     {
-        
+        OnPlayerShapeChanged(playerShape);
     }
 
     void Update()
