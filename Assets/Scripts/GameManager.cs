@@ -12,8 +12,10 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         if (instance != this) Destroy(this);
+
+        Player = FindAnyObjectByType<PlayerManager>();
     }
     #endregion
 
-    public PlayerManager Player;
+    public PlayerManager Player { get; private set; }
 }

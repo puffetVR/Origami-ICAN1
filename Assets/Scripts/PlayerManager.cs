@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -10,16 +11,17 @@ public class PlayerManager : MonoBehaviour
         instance = this;
 
         if (instance != this) Destroy(this);
+
+        playerMovement = GetComponentInChildren<PlayerMovement>();
     }
     #endregion
 
     #region Player Shape Enum
-    public enum PlayerShape { DEFAULT, GRAB, CAT, FLY }
+    public enum PlayerShape { DEFAULT, CAT, FLY }
     public SpriteRenderer playerSprite;
-    [SerializeField] Sprite defaultSprite;
-    [SerializeField] Sprite grabSprite;
-    [SerializeField] Sprite catSprite;
-    [SerializeField] Sprite flySprite;
+    [SerializeField] private Sprite defaultSprite;
+    [SerializeField] private Sprite catSprite;
+    [SerializeField] private Sprite flySprite;
 
     public PlayerShape playerShape
     {
@@ -39,9 +41,6 @@ public class PlayerManager : MonoBehaviour
             case PlayerShape.DEFAULT:
                 playerSprite.sprite = defaultSprite;
                 break;
-            case PlayerShape.GRAB:
-                playerSprite.sprite = grabSprite;
-                break;
             case PlayerShape.CAT:
                 playerSprite.sprite = catSprite;
                 break;
@@ -57,11 +56,9 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region Attributes
-    // VALUES
-    public float defaultSpeed = 2f;
-    public float grabSpeed = 2.5f;
-    public float catSpeed = 3.5f;
-    public float flySpeed = 3f;
+    [Header("References")]
+    public PlayerData playerData;
+    PlayerMovement playerMovement;
     #endregion
 
     public Vector3 playerPosition { get; private set; }
@@ -74,6 +71,8 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         PlayerInput();
+
+        if (playerMovement.isGrounded && playerShape == PlayerShape.FLY) playerShape = PlayerShape.CAT;
     }
 
     public void PassPlayerPosition(Vector3 pos)
@@ -83,9 +82,30 @@ public class PlayerManager : MonoBehaviour
 
     void PlayerInput()
     {
-        if (Input.GetKey(KeyCode.Alpha1)) playerShape = PlayerShape.GRAB;
-        if (Input.GetKey(KeyCode.Alpha2)) playerShape = PlayerShape.CAT;
-        if (Input.GetKey(KeyCode.Alpha3)) playerShape = PlayerShape.FLY;
+        if (Input.GetButtonDown("Shape"))
+        {
+            //StartCoroutine(ShapeshiftBuffer());
+
+            Shapeshift();
+        }
+
     }
+
+    void Shapeshift()
+    {
+        if (playerMovement.isGrounded) playerShape = playerShape == PlayerShape.DEFAULT
+                                            || playerShape == PlayerShape.FLY ?
+                                               PlayerShape.CAT : PlayerShape.DEFAULT;
+        else playerShape = playerShape == PlayerShape.DEFAULT
+                        || playerShape == PlayerShape.CAT ?
+                           PlayerShape.FLY : PlayerShape.CAT;
+    }
+
+    //IEnumerator ShapeshiftBuffer()
+    //{
+    //    yield return new WaitUntil(() => !playerMovement.hasWallJumped);
+
+    //    Shapeshift();
+    //}
 
 }

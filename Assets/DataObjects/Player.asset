@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e138c35761b59384ea6aafd993e9bea3, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  acceleration: 5
+  airAcceleration: 2
+  defaultSpeed: 4
+  defaultDrag: 0
+  catSpeed: 5
+  catDrag: 0
+  flyMinSpeed: 1.5
+  flySpeed: 5
+  flyMaxSpeed: 10
+  flyMinDrag: 0
+  flyDrag: 0
+  flyMaxDrag: 10
+  defaultGravityScale: 1.5
+  fallGravityScale: 2.5
+  maxFallSpeed: 10
+  jumpStrength: 10
+  wallJumpStrength: {x: 8, y: 12}
+  wallJumpDuration: 0.5
+  coyoteTime: 0.2
+  jumpBufferTime: 0.2
