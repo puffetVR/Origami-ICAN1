@@ -57,11 +57,14 @@ public class PlayerManager : MonoBehaviour
 
     #region Attributes
     [Header("References")]
-    public PlayerData playerData;
-    PlayerMovement playerMovement;
+    public PlayerData data;
+    public PlayerMovement playerMovement { get; private set; }
+    public CameraController playerCamera { get; private set; }
     #endregion
 
     public Vector3 playerPosition { get; private set; }
+    public float playerWidth { get; private set; }
+    public float playerHeight { get; private set; }
 
     void Start()
     {
@@ -73,6 +76,9 @@ public class PlayerManager : MonoBehaviour
         PlayerInput();
 
         if (playerMovement.isGrounded && playerShape == PlayerShape.FLY) playerShape = PlayerShape.CAT;
+
+        playerWidth = playerSprite.bounds.size.x;
+        playerHeight = playerSprite.bounds.size.y;
     }
 
     public void PassPlayerPosition(Vector3 pos)
@@ -84,7 +90,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Shape"))
         {
-            //StartCoroutine(ShapeshiftBuffer());
 
             Shapeshift();
         }
@@ -101,11 +106,5 @@ public class PlayerManager : MonoBehaviour
                            PlayerShape.FLY : PlayerShape.CAT;
     }
 
-    //IEnumerator ShapeshiftBuffer()
-    //{
-    //    yield return new WaitUntil(() => !playerMovement.hasWallJumped);
-
-    //    Shapeshift();
-    //}
 
 }

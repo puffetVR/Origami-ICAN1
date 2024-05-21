@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Editor
   - Water
   - UI
   - Player
-  - 
-  - 
+  - World
+  - LevelBounds
   - 
   - 
   - 
@@ -38,6 +38,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4225703783
+    locked: 0
+  - name: Midground
+    uniqueID: 356264955
+    locked: 0
+  - name: Level_Ground
+    uniqueID: 444542855
+    locked: 0
+  - name: Level_Background
+    uniqueID: 3793777201
+    locked: 0
+  - name: Level
+    uniqueID: 284511241
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Entities
+    uniqueID: 979514681
+    locked: 0
+  - name: Foreground
+    uniqueID: 1217193633
     locked: 0

@@ -6,20 +6,31 @@ public class PlayerData : ScriptableObject
     [Header("Movement")]
     public float acceleration = 5f;
     public float airAcceleration = 2f;
+    public float minDrag = 0f;
+    public float maxDrag = 10f;
+
+    [Header("Collision")]
+    //public float collisionWidth = .6f;
+    public float groundCheckDist = .1f;
+    public float wallCheckDist = .3f;
+    public float shapeColXPos = .5f;
 
     [Header("Default Shape")]
     public float defaultSpeed = 2f;
-    public float defaultDrag = 0f;
+    public float defaultWidth = .3f;
+    public Vector2 defaultBoundsOffset;
+    public Vector2 defaultBoundsSize;
     [Header("Cat Shape")]
     public float catSpeed = 3.5f;
-    public float catDrag = 2f;
+    public float catWidth = .7f;
+    public Vector2 catBoundsOffset;
+    public Vector2 catBoundsSize;
     [Header("Fly Shape")]
     public float flyMinSpeed = 1.5f;
     public float flySpeed = 3f;
     public float flyMaxSpeed = 6f;
-    public float flyMinDrag = 0f;
-    public float flyDrag = 5f;
-    public float flyMaxDrag = 10f;
+    public Vector2 flyBoundsOffset;
+    public Vector2 flyBoundsSize;
 
     [Header("Gravity")]
     public float defaultGravityScale = 1f;

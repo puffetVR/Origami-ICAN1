@@ -12,23 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e138c35761b59384ea6aafd993e9bea3, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  acceleration: 5
+  acceleration: 10
   airAcceleration: 2
+  minDrag: 0
+  maxDrag: 10
+  groundCheckDist: 0.1
+  wallCheckDist: 1
+  shapeColXPos: 0.3
   defaultSpeed: 4
-  defaultDrag: 0
+  defaultWidth: 0.3
+  defaultBoundsOffset: {x: 0, y: 0.75}
+  defaultBoundsSize: {x: 0.6, y: 1.5}
   catSpeed: 5
-  catDrag: 0
+  catWidth: 0.7
+  catBoundsOffset: {x: 0, y: 0.75}
+  catBoundsSize: {x: 1.6, y: 1.5}
   flyMinSpeed: 1.5
-  flySpeed: 5
+  flySpeed: 10
   flyMaxSpeed: 10
-  flyMinDrag: 0
-  flyDrag: 0
-  flyMaxDrag: 10
+  flyBoundsOffset: {x: 0, y: 0.625}
+  flyBoundsSize: {x: 1.5, y: 1.25}
   defaultGravityScale: 1.5
   fallGravityScale: 2.5
   maxFallSpeed: 10
   jumpStrength: 10
   wallJumpStrength: {x: 8, y: 12}
-  wallJumpDuration: 0.5
+  wallJumpDuration: 0.6
   coyoteTime: 0.2
   jumpBufferTime: 0.2

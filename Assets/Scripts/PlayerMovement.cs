@@ -1,27 +1,26 @@
-using System.Collections;
 using UnityEngine;
+using static PlayerManager;
 
 public class PlayerMovement : MonoBehaviour
 {
     // VECTORS
     private Vector2 playerInput;
     private Vector2 playerVelocity;
-    private float groundCheckDist = .1f;
+    private int playerDirection = 1;
+    private Vector2 lastGroundedPosition;
     
     [SerializeField] private LayerMask worldLayerMask;
 
     // REFERENCES
     private PlayerManager player;
     private Rigidbody2D playerBody;
+    private BoxCollider2D playerCollider;
+    [SerializeField] private BoxCollider2D spriteBounds;
 
-    [Header("Jump")]
-    [SerializeField] private float wallCheckDist = .3f;
-    private float wallJumpDirection;
     public bool hasWallJumped { private set; get; } = false;
     private float coyoteTimeCounter = 0f;
     private float jumpBufferCounter = 0f;
     private float wallJumpCounter = 0f;
-    private float flyDragShiftTime;
     private float flyDragShiftCounter = 0f;
 
     public float playerCurrentJumpPower { private set; get; } = 1.0f;
@@ -29,20 +28,29 @@ public class PlayerMovement : MonoBehaviour
     private float accelerationRate;
     public float playerCurrentDrag { private set; get; } = 0f;
 
+    private const float positionCacheTick = 2f;
+    private float timeSinceLastPosTick = positionCacheTick;
+
     // FLAGS
     public bool isGrounded { private set; get; }
+    private bool preventWallSlide = false;
+    private bool hasWallJumpedToFly = false;
+    public bool keepPlayerInBounds = true;
 
     void Start()
     {
-        player = PlayerManager.instance;
+        player = instance;
         playerBody = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
     }
 
     bool IsInit()
     {
         if (!playerBody ||
-            !player)
+            !player ||
+            !playerCollider)
         {
+            Debug.LogError("Oh oh stinky!");
             return false;
         }
 
@@ -55,7 +63,12 @@ public class PlayerMovement : MonoBehaviour
 
         HandleJump();
 
-        if (isGrounded) coyoteTimeCounter = player.playerData.coyoteTime;
+        if (isGrounded)
+        {
+            accelerationRate = player.data.acceleration;
+            coyoteTimeCounter = player.data.coyoteTime;
+            if (hasWallJumpedToFly) hasWallJumpedToFly = false;
+        }
         else coyoteTimeCounter -= Time.deltaTime;
     }
 
@@ -64,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
         if (!IsInit()) return;
 
         HandleMovement();
+        HandleBounds();
+        HandleDirection();
         HandleDrag();
         MovementInput();
         HandlePlayerShape();
@@ -83,47 +98,85 @@ public class PlayerMovement : MonoBehaviour
     {
         playerBody.drag = playerCurrentDrag;
 
-        if (player.playerShape == PlayerManager.PlayerShape.FLY)
+        if (player.playerShape == PlayerShape.FLY && hasWallJumpedToFly)
         {
-            flyDragShiftTime = player.playerData.wallJumpDuration * 1.1f;
-            flyDragShiftCounter = flyDragShiftCounter < flyDragShiftTime && flyDragShiftCounter >= 0 ? flyDragShiftCounter += Time.deltaTime : -1;
+            if (flyDragShiftCounter < (player.data.wallJumpDuration * 1.1f))
+            {
+                flyDragShiftCounter += Time.deltaTime;
+            }
+            else
+            {
+                hasWallJumpedToFly = false;
+            }
 
             //playerCurrentSpeed = playerInput.y > 0 ? player.flyMaxSpeed : player.flyMinSpeed;
         }
         else flyDragShiftCounter = 0;
+        
+        if (player.playerShape == PlayerShape.CAT)
+        {
+            if (!isGrounded && !preventWallSlide && IsAgainstWall() && playerInput.x != 0) playerCurrentDrag = player.data.maxDrag;
+            else playerCurrentDrag = player.data.minDrag;
+        }
+    }
+
+    void HandleBounds()
+    {
+        if (!keepPlayerInBounds) return;
+
+        playerBody.position = new Vector2(Mathf.Clamp(playerBody.position.x, GameManager.instance.levelBoundsMin.x, GameManager.instance.levelBoundsMax.x),
+                                          Mathf.Clamp(playerBody.position.y, float.MinValue, GameManager.instance.levelBoundsMax.y));
+
     }
 
     void HandleMovement()
     {
-        accelerationRate = hasWallJumped && player.playerShape == PlayerManager.PlayerShape.CAT ? player.playerData.airAcceleration : player.playerData.acceleration;
+        accelerationRate = hasWallJumped ? player.data.airAcceleration : player.data.acceleration;
 
         float moveInput = playerInput.x * playerCurrentSpeed;
         float speed = moveInput - playerBody.velocity.x;
         float playerMovement = speed * accelerationRate;
 
         playerBody.AddForce(playerMovement * Vector2.right);
+    }
 
-        if (/*playerBody.velocity.x > 0 || */playerInput.x > 0) player.playerSprite.flipX = false;
-        if (/*playerBody.velocity.x < 0 || */playerInput.x < 0) player.playerSprite.flipX = true;
+    void HandleDirection()
+    {
+        player.playerSprite.flipX = playerDirection > 0 ? false : true;
+
+        if (player.playerShape == PlayerShape.CAT || player.playerShape == PlayerShape.FLY)
+            playerCollider.offset = new Vector2(player.data.shapeColXPos * playerDirection, playerCollider.offset.y);
+        else playerCollider.offset = new Vector2(0, playerCollider.offset.y);
+
+        if (!hasWallJumped && playerInput.x > 0) playerDirection = 1;
+        if (!hasWallJumped && playerInput.x < 0) playerDirection = -1;
     }
 
     void HandleJump()
     {
-        if (Input.GetButtonDown("Jump")) jumpBufferCounter = player.playerData.jumpBufferTime;
+        if (Input.GetButtonDown("Jump")) jumpBufferCounter = player.data.jumpBufferTime;
         else jumpBufferCounter -= Time.deltaTime;
 
-        if (player.playerShape == PlayerManager.PlayerShape.CAT)
+        //Reset wall slide prevention
+        if (!isGrounded && preventWallSlide && !IsAgainstWall()) preventWallSlide = false;
+
+        if (player.playerShape == PlayerShape.CAT)
         {
+            // Ground Jump Logic
             if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
             {
-                playerBody.velocity = new Vector2(playerBody.velocity.x, player.playerData.jumpStrength);
+                if (IsAgainstWall()) preventWallSlide = true;
+                playerBody.velocity = new Vector2(playerBody.velocity.x, player.data.jumpStrength);
                 Debug.Log("Jump");
                 jumpBufferCounter = 0f;
             }
 
-            if (jumpBufferCounter > 0f && CanWallJump())
+            // Wall Jump Logic
+            if (jumpBufferCounter > 0f && Input.GetButtonDown("Jump") && CanWallJump())
             {
-                Vector2 jumpDir = new Vector2(wallJumpDirection * player.playerData.wallJumpStrength.x, player.playerData.wallJumpStrength.y);
+                playerCurrentDrag = player.data.minDrag;
+                //Vector2 jumpDir = new Vector2(wallJumpDirection * player.data.wallJumpStrength.x, player.data.wallJumpStrength.y);
+                Vector2 jumpDir = new Vector2(playerDirection * player.data.wallJumpStrength.x, player.data.wallJumpStrength.y);
                 Debug.Log("WallJump " + jumpDir);
                 playerBody.velocity = jumpDir;
                 hasWallJumped = true;
@@ -131,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         wallJumpCounter = hasWallJumped ? wallJumpCounter += Time.deltaTime : 0f;
-        hasWallJumped = wallJumpCounter > player.playerData.wallJumpDuration || isGrounded ? false : hasWallJumped;
+        hasWallJumped = wallJumpCounter > player.data.wallJumpDuration || isGrounded ? false : hasWallJumped;
 
         // Shorter jump if not holding the jump button all the way
         // Stronger gravity when falling
@@ -139,71 +192,91 @@ public class PlayerMovement : MonoBehaviour
         {
             //if (!hasWallJumped) playerBody.velocity = new Vector2(playerBody.velocity.x, playerBody.velocity.y * .5f);
             playerBody.velocity = new Vector2(playerBody.velocity.x, playerBody.velocity.y * .5f);
-            playerBody.gravityScale = player.playerData.fallGravityScale;
+            playerBody.gravityScale = player.data.fallGravityScale;
             coyoteTimeCounter = 0f;
         }
 
         // Faster and clamp fall speed
         if (playerBody.velocity.y < 0f)
         {
-            playerBody.gravityScale = player.playerData.fallGravityScale;
+            playerBody.gravityScale = player.data.fallGravityScale;
 
             playerBody.velocity =
                 new Vector2(playerBody.velocity.x,
-                Mathf.Clamp(playerBody.velocity.y, Mathf.Abs(player.playerData.maxFallSpeed) * -1, float.MaxValue));
+                Mathf.Clamp(playerBody.velocity.y, Mathf.Abs(player.data.maxFallSpeed) * -1, float.MaxValue));
         }
 
     }
 
     bool IsGrounded()
     {
-        Vector2 playerOrigin = playerBody.transform.position;
+        Bounds bounds = playerCollider.bounds;
+        //Vector3 cast = new Vector2((player.playerData.shapeColXPos / 2) * -playerDirection, -(playerCollider.offset.y / 2));
+        Vector2 castL = new Vector2(bounds.center.x + bounds.extents.x,
+            bounds.center.y - bounds.extents.y);
+        Vector2 castR = new Vector2(bounds.center.x - bounds.extents.x,
+            bounds.center.y - bounds.extents.y);
+        //Vector2 playerOrigin = playerBody.transform.position;
         Vector2 groundDirection = -playerBody.transform.up;
 
-        RaycastHit2D hit = Physics2D.Raycast(playerOrigin, groundDirection, groundCheckDist, worldLayerMask);
-        Color rayColor = hit.collider != null ? Color.green : Color.red;
+        RaycastHit2D hitL = Physics2D.Raycast(castL, groundDirection, player.data.groundCheckDist, worldLayerMask);
+        RaycastHit2D hitR = Physics2D.Raycast(castR, groundDirection, player.data.groundCheckDist, worldLayerMask);
+        Color rayColorL = hitL.collider != null ? Color.green : Color.red;
+        Color rayColorR = hitR.collider != null ? Color.green : Color.red;
 
-        Debug.DrawRay(playerOrigin, groundDirection * groundCheckDist, rayColor, 1);
+        Debug.DrawRay(castL, groundDirection * player.data.groundCheckDist, rayColorL, 1);
+        Debug.DrawRay(castR, groundDirection * player.data.groundCheckDist, rayColorR, 1);
 
-        if (hit.collider != null)
+        if (hitL.collider != null || hitR.collider != null)
         {
-            playerBody.gravityScale = player.playerData.defaultGravityScale;
+            playerBody.gravityScale = player.data.defaultGravityScale;
             //hasWallJumped = false;
             return true;
         }
         else return false;        
     }
 
+    bool IsAgainstWall()
+    {
+        Bounds bounds = playerCollider.bounds;
+        Vector2 cast = new Vector2(playerDirection > 0 ? bounds.center.x + bounds.extents.x : bounds.center.x - bounds.extents.x,
+            bounds.center.y - bounds.extents.y);
+        Vector2 direction = playerBody.transform.right * playerDirection;
+
+        RaycastHit2D hit = Physics2D.Raycast(cast, direction, player.data.groundCheckDist, worldLayerMask);
+        Color rayColor = hit.collider != null ? Color.green : Color.red;
+
+        Debug.DrawRay(cast, direction * player.data.groundCheckDist, rayColor, 1);
+
+        if (hit.collider != null) return true;
+        else return false;
+    }
+
     bool CanWallJump()
     {
-        if (player.playerShape != PlayerManager.PlayerShape.CAT || isGrounded) return false;
+        if (player.playerShape != PlayerShape.CAT || isGrounded) return false;
 
         Vector2 playerOrigin = playerBody.transform.position;
         Vector2 leftDirection = -playerBody.transform.right;
         Vector2 rightDirection = playerBody.transform.right;
 
-        RaycastHit2D leftHit = Physics2D.Raycast(playerOrigin, leftDirection, wallCheckDist, worldLayerMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(playerOrigin, rightDirection, wallCheckDist, worldLayerMask);
+        RaycastHit2D leftHit = Physics2D.Raycast(playerOrigin, leftDirection, player.data.wallCheckDist, worldLayerMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(playerOrigin, rightDirection, player.data.wallCheckDist, worldLayerMask);
 
         Color leftRayColor = leftHit.collider != null ? Color.green : Color.red;
         Color rightRayColor = rightHit.collider != null ? Color.green : Color.red;
-        Debug.DrawRay(playerOrigin, leftDirection * wallCheckDist, leftRayColor, 1);
-        Debug.DrawRay(playerOrigin, rightDirection * wallCheckDist, rightRayColor, 1);
+        Debug.DrawRay(playerOrigin, leftDirection * player.data.wallCheckDist, leftRayColor, 1);
+        Debug.DrawRay(playerOrigin, rightDirection * player.data.wallCheckDist, rightRayColor, 1);
         
-        //wallJumpDirection = Vector2.zero;
-        wallJumpDirection = 0f;
-
         if (rightHit.collider != null)
         {
-            //wallJumpDirection = leftDirection;
-            wallJumpDirection = -1f;
+            playerDirection = -1;
             return true;
         }
 
         if (leftHit.collider != null)
         {
-            //wallJumpDirection = rightDirection;
-            wallJumpDirection = 1f;
+            playerDirection = 1;
             return true;
         }
 
@@ -215,23 +288,75 @@ public class PlayerMovement : MonoBehaviour
     {
         switch (player.playerShape)
         {
-            case PlayerManager.PlayerShape.DEFAULT:
-                playerCurrentSpeed = player.playerData.defaultSpeed;
-                playerCurrentDrag = player.playerData.defaultDrag;
+            case PlayerShape.DEFAULT:
+                playerCurrentSpeed = player.data.defaultSpeed;
+                playerCurrentDrag = player.data.minDrag;
+                playerCollider.size = new Vector2(player.data.defaultWidth, 1);
+                spriteBounds.offset = player.data.defaultBoundsOffset;
+                spriteBounds.size = player.data.defaultBoundsSize;
                 break;
-            case PlayerManager.PlayerShape.CAT:
-                playerCurrentSpeed = player.playerData.catSpeed;
-                playerCurrentDrag = player.playerData.catDrag;
+            case PlayerShape.CAT:
+                playerCurrentSpeed = player.data.catSpeed;
+                playerCollider.size = new Vector2(player.data.catWidth, 1);
+                spriteBounds.offset = player.data.catBoundsOffset;
+                spriteBounds.size = player.data.catBoundsSize;
                 break;
-            case PlayerManager.PlayerShape.FLY:
-                playerCurrentSpeed = player.playerData.flySpeed;
-                if (flyDragShiftCounter >= 0) playerCurrentDrag = player.playerData.flyMinDrag;
-                else playerCurrentDrag = playerInput.y < 0 ? player.playerData.flyMinDrag : player.playerData.flyMaxDrag;
+            case PlayerShape.FLY:
+                playerCurrentSpeed = player.data.flySpeed;
+                if (hasWallJumped) hasWallJumpedToFly = true;
+                if (flyDragShiftCounter > 0) playerCurrentDrag = player.data.minDrag;
+                else playerCurrentDrag = playerInput.y < 0 ? player.data.minDrag : player.data.maxDrag;
+                playerCollider.size = new Vector2(player.data.catWidth, 1);
+                spriteBounds.offset = player.data.flyBoundsOffset;
+                spriteBounds.size = player.data.flyBoundsSize;
                 break;
             default:
                 break;
         }
 
+    }
+
+    private void LateUpdate()
+    {
+        HandlePositionCaching();
+        ConfinePlayerToBounds();
+    }
+
+    bool IsPlayerInCameraBounds()
+    {
+        if (player.playerSprite.isVisible) return true;
+        else return false;
+    }
+
+    void ConfinePlayerToBounds()
+    {
+        if (!keepPlayerInBounds) return;
+
+        if (!IsPlayerInCameraBounds())
+        {
+            playerBody.velocity = Vector2.zero;
+            playerBody.position = lastGroundedPosition;
+        }
+    }
+
+    void HandlePositionCaching()
+    {
+        /*
+        bool justLanded = !isGrounded && IsGrounded();
+        if (justLanded == true)
+        {
+            timeSinceLastPosTick = 0;
+            Debug.Log("Just landed.");
+        }
+        */
+
+        timeSinceLastPosTick = isGrounded ? timeSinceLastPosTick + Time.deltaTime : 0;
+
+        if (timeSinceLastPosTick > positionCacheTick)
+        {
+            timeSinceLastPosTick = 0;
+            lastGroundedPosition = transform.position;
+        }
     }
 
 }

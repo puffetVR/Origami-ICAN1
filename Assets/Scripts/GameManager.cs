@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,9 +11,26 @@ public class GameManager : MonoBehaviour
 
         if (instance != this) Destroy(this);
 
-        Player = FindAnyObjectByType<PlayerManager>();
+        Player = PlayerManager.instance;
     }
     #endregion
 
     public PlayerManager Player { get; private set; }
+
+    public LevelData levelData;
+
+    public BoxCollider2D levelBounds;
+    public Vector2 levelBoundsMin { get; private set; }
+    public Vector2 levelBoundsMax { get; private set; }
+
+    private void FixedUpdate()
+    {
+        CalculateLevelBounds();
+    }
+
+    void CalculateLevelBounds()
+    {
+        levelBoundsMin = new Vector2(levelBounds.bounds.min.x, levelBounds.bounds.min.y);
+        levelBoundsMax = new Vector2(levelBounds.bounds.max.x, levelBounds.bounds.max.y);
+    }
 }
