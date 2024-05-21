@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public PlayerManager Player { get; private set; }
+    public UIManager UI;
+    public InputManager Input;
 
     public LevelData levelData;
 

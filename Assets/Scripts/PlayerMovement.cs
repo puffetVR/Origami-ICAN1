@@ -4,7 +4,6 @@ using static PlayerManager;
 public class PlayerMovement : MonoBehaviour
 {
     // VECTORS
-    private Vector2 playerInput;
     private Vector2 playerVelocity;
     private int playerDirection = 1;
     private Vector2 lastGroundedPosition;
@@ -80,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         HandleBounds();
         HandleDirection();
         HandleDrag();
-        MovementInput();
+        //MovementInput();
         HandlePlayerShape();
         player.PassPlayerPosition(transform.position);
 
@@ -88,12 +87,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = IsGrounded();
     }
 
-    void MovementInput()
-    {
-        playerInput = new Vector2(Input.GetAxisRaw("Horizontal"),
-                                  Input.GetAxisRaw("Vertical"));
-    }
-
+    #region Movement
     void HandleDrag()
     {
         playerBody.drag = playerCurrentDrag;
@@ -115,25 +109,16 @@ public class PlayerMovement : MonoBehaviour
         
         if (player.playerShape == PlayerShape.CAT)
         {
-            if (!isGrounded && !preventWallSlide && IsAgainstWall() && playerInput.x != 0) playerCurrentDrag = player.data.maxDrag;
+            if (!isGrounded && !preventWallSlide && IsAgainstWall() && GameManager.instance.Input.playerInput.x != 0) playerCurrentDrag = player.data.maxDrag;
             else playerCurrentDrag = player.data.minDrag;
         }
-    }
-
-    void HandleBounds()
-    {
-        if (!keepPlayerInBounds) return;
-
-        playerBody.position = new Vector2(Mathf.Clamp(playerBody.position.x, GameManager.instance.levelBoundsMin.x, GameManager.instance.levelBoundsMax.x),
-                                          Mathf.Clamp(playerBody.position.y, float.MinValue, GameManager.instance.levelBoundsMax.y));
-
     }
 
     void HandleMovement()
     {
         accelerationRate = hasWallJumped ? player.data.airAcceleration : player.data.acceleration;
 
-        float moveInput = playerInput.x * playerCurrentSpeed;
+        float moveInput = GameManager.instance.Input.playerInput.x * playerCurrentSpeed;
         float speed = moveInput - playerBody.velocity.x;
         float playerMovement = speed * accelerationRate;
 
@@ -148,13 +133,15 @@ public class PlayerMovement : MonoBehaviour
             playerCollider.offset = new Vector2(player.data.shapeColXPos * playerDirection, playerCollider.offset.y);
         else playerCollider.offset = new Vector2(0, playerCollider.offset.y);
 
-        if (!hasWallJumped && playerInput.x > 0) playerDirection = 1;
-        if (!hasWallJumped && playerInput.x < 0) playerDirection = -1;
+        if (!hasWallJumped && GameManager.instance.Input.playerInput.x > 0) playerDirection = 1;
+        if (!hasWallJumped && GameManager.instance.Input.playerInput.x < 0) playerDirection = -1;
     }
+    #endregion
 
+    #region Jump
     void HandleJump()
     {
-        if (Input.GetButtonDown("Jump")) jumpBufferCounter = player.data.jumpBufferTime;
+        if (GameManager.instance.Input.interact) jumpBufferCounter = player.data.jumpBufferTime;
         else jumpBufferCounter -= Time.deltaTime;
 
         //Reset wall slide prevention
@@ -172,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Wall Jump Logic
-            if (jumpBufferCounter > 0f && Input.GetButtonDown("Jump") && CanWallJump())
+            if (jumpBufferCounter > 0f && GameManager.instance.Input.interact && CanWallJump())
             {
                 playerCurrentDrag = player.data.minDrag;
                 //Vector2 jumpDir = new Vector2(wallJumpDirection * player.data.wallJumpStrength.x, player.data.wallJumpStrength.y);
@@ -188,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Shorter jump if not holding the jump button all the way
         // Stronger gravity when falling
-        if (Input.GetButtonUp("Jump") && playerBody.velocity.y > 0f)
+        if (GameManager.instance.Input.interactUp && playerBody.velocity.y > 0f)
         {
             //if (!hasWallJumped) playerBody.velocity = new Vector2(playerBody.velocity.x, playerBody.velocity.y * .5f);
             playerBody.velocity = new Vector2(playerBody.velocity.x, playerBody.velocity.y * .5f);
@@ -283,6 +270,7 @@ public class PlayerMovement : MonoBehaviour
         return false;
 
     }
+    #endregion
 
     void HandlePlayerShape()
     {
@@ -305,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
                 playerCurrentSpeed = player.data.flySpeed;
                 if (hasWallJumped) hasWallJumpedToFly = true;
                 if (flyDragShiftCounter > 0) playerCurrentDrag = player.data.minDrag;
-                else playerCurrentDrag = playerInput.y < 0 ? player.data.minDrag : player.data.maxDrag;
+                else playerCurrentDrag = GameManager.instance.Input.playerInput.y < 0 ? player.data.minDrag : player.data.maxDrag;
                 playerCollider.size = new Vector2(player.data.catWidth, 1);
                 spriteBounds.offset = player.data.flyBoundsOffset;
                 spriteBounds.size = player.data.flyBoundsSize;
@@ -320,6 +308,16 @@ public class PlayerMovement : MonoBehaviour
     {
         HandlePositionCaching();
         ConfinePlayerToBounds();
+    }
+
+    #region Bounds stuff
+    void HandleBounds()
+    {
+        if (!keepPlayerInBounds) return;
+
+        playerBody.position = new Vector2(Mathf.Clamp(playerBody.position.x, GameManager.instance.levelBoundsMin.x, GameManager.instance.levelBoundsMax.x),
+                                          Mathf.Clamp(playerBody.position.y, float.MinValue, GameManager.instance.levelBoundsMax.y));
+
     }
 
     bool IsPlayerInCameraBounds()
@@ -358,5 +356,6 @@ public class PlayerMovement : MonoBehaviour
             lastGroundedPosition = transform.position;
         }
     }
+    #endregion
 
 }

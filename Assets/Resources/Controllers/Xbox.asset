@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbda990f110496c42a99c6387f8a6911, type: 3}
+  m_Name: Xbox
+  m_EditorClassIdentifier: 
+  movementKeys: {fileID: 21300000, guid: c02a6c809678ce34999c673813c3412e, type: 3}
+  downKey: {fileID: 21300000, guid: 81b6ce38a99d19f459df01f15f558769, type: 3}
+  interactKey: {fileID: 21300000, guid: 1633b7aa19204ad40bf6522c50cf86ee, type: 3}
+  shapeshiftKey: {fileID: 0}

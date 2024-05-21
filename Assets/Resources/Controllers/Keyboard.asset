@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbda990f110496c42a99c6387f8a6911, type: 3}
+  m_Name: Keyboard
+  m_EditorClassIdentifier: 
+  movementKeys: {fileID: 21300000, guid: a2f7489f4791df34cb2c94e6625052dd, type: 3}
+  downKey: {fileID: 21300000, guid: ab936fae5377c8949b4fbc2ca782a34c, type: 3}
+  interactKey: {fileID: 21300000, guid: e67551c71deefaf47b0e64c010173086, type: 3}
+  shapeshiftKey: {fileID: 21300000, guid: 3ba82d755b64ffd4d869bda75277bdab, type: 3}

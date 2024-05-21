@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -51,7 +52,7 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
 
-        Debug.Log(shape);
+        Debug.Log("<color=magenta>Current shape: " + shape + "</color>");
     }
     #endregion
 
@@ -61,8 +62,6 @@ public class PlayerManager : MonoBehaviour
     public PlayerMovement playerMovement { get; private set; }
     public CameraController playerCamera { get; private set; }
     #endregion
-
-    public Vector3 playerPosition { get; private set; }
     public float playerWidth { get; private set; }
     public float playerHeight { get; private set; }
 
@@ -75,24 +74,34 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerInput();
 
+        if (interactibles != null)
+        {
+            GetTargetInteractible();
+
+            // UI interaction
+            GameManager.instance.UI.InteractionPrompt(targetInteractible);
+        }
+
         if (playerMovement.isGrounded && playerShape == PlayerShape.FLY) playerShape = PlayerShape.CAT;
 
         playerWidth = playerSprite.bounds.size.x;
         playerHeight = playerSprite.bounds.size.y;
     }
 
+    #region Player Position
+    public Vector3 playerPosition { get; private set; }
+
     public void PassPlayerPosition(Vector3 pos)
     {
         playerPosition = pos;
     }
+    #endregion
 
     void PlayerInput()
     {
-        if (Input.GetButtonDown("Shape"))
-        {
+        if (GameManager.instance.Input.shapeshift) Shapeshift();
 
-            Shapeshift();
-        }
+        if (GameManager.instance.Input.interact) Interact();
 
     }
 
@@ -106,5 +115,70 @@ public class PlayerManager : MonoBehaviour
                            PlayerShape.FLY : PlayerShape.CAT;
     }
 
+    #region Interaction
+    public Interactible targetInteractible { get; private set; }
+    public List<Interactible> interactibles { get; private set; } = new List<Interactible>();
 
+    public void AddToInteractibles(Interactible interactible)
+    {
+        if (interactibles.Contains(interactible))
+        {
+            Debug.LogWarning(interactible.gameObject.name + " is already listed.");
+            return;
+        }
+
+        interactibles.Add(interactible);
+    }
+    public void RemoveFromInteractibles(Interactible interactible)
+    {
+        if (!interactibles.Contains(interactible))
+        {
+            Debug.LogWarning(interactible.gameObject.name + " is not listed.");
+            return;
+        }
+
+        interactibles.Remove(interactible);
+    }
+
+    void Interact()
+    {
+        if (playerShape != PlayerShape.DEFAULT) return;
+
+        Debug.Log("<color=yellow>[INTERACT]</color>");
+        if (targetInteractible != null) targetInteractible.Interact();
+    }
+
+    void GetTargetInteractible()
+    {
+        if (interactibles.Count == 0)
+        {
+            targetInteractible = null;
+            return;
+        }
+
+        targetInteractible = interactibles[0];
+
+        if (interactibles.Count > 1) targetInteractible = GetClosestInteractible();
+
+    }
+
+    Interactible GetClosestInteractible()
+    {
+        Interactible currentTarget = targetInteractible;
+        float distToNearest = Vector2.Distance(playerPosition, currentTarget.transform.position);
+
+        for (int i = 1; i < interactibles.Count; i++)
+        {
+            float distToCurrent = Vector2.Distance(playerPosition, interactibles[i].transform.position);
+
+            if (distToCurrent < distToNearest)
+            {
+                currentTarget = interactibles[i];
+                break;
+            }
+        }
+
+        return currentTarget;
+    }
+    #endregion
 }
