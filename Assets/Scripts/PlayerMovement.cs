@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 playerVelocity;
     private int playerDirection = 1;
     private Vector2 lastGroundedPosition;
-    
+    private Vector2 airZone;
+
     [SerializeField] private LayerMask worldLayerMask;
     [SerializeField] private LayerMask wallJumpLayerMask;
 
@@ -115,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
 
         player.PassPlayerPosition(transform.position);
 
+        if (isBeingPushedUpwards) playerBody.velocity = new Vector2(playerBody.velocity.x + (airZone.x * 2), playerBody.velocity.y + (airZone.y * 2));
         playerVelocity = playerBody.velocity;
+        
         isGrounded = IsGrounded();
     }
     private void LateUpdate()
@@ -155,7 +158,8 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     void HandleDragAndGravity()
     {
-        gravityModifier = isBeingPushedUpwards ? -2 : 1f;
+        gravityModifier = isBeingPushedUpwards ? -1 : 1;
+        //if (isBeingPushedUpwards) playerBody.AddForce(airZone * 10);
         //dragModifier = isBeingPushedUpwards ? 0f : 1f;
 
         playerBody.gravityScale = playerCurrentGravity * gravityModifier;
@@ -214,6 +218,9 @@ public class PlayerMovement : MonoBehaviour
             */
 
         }
+
+        //
+        playerCurrentGravity = isBeingPushedUpwards ? 1f : playerCurrentGravity;
 
         // Clamp Vertical Velocity
         playerBody.velocity = new Vector2(playerBody.velocity.x,
@@ -374,6 +381,7 @@ public class PlayerMovement : MonoBehaviour
         if (!collision.CompareTag("Pusher")) return;
 
         isInAirZone = false;
+        airZone = Vector2.zero;
 
         Debug.Log("Pushing player downwards.");
         isBeingPushedUpwards = false;
@@ -384,6 +392,7 @@ public class PlayerMovement : MonoBehaviour
         if (!collision.CompareTag("Pusher")) return;
 
         isInAirZone = true;
+        airZone = collision.transform.up;
 
         if (player.playerShape == PlayerShape.FLY)
         {
