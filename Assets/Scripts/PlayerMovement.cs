@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lastGroundedPosition;
     
     [SerializeField] private LayerMask worldLayerMask;
+    [SerializeField] private LayerMask wallJumpLayerMask;
 
     // REFERENCES
     private PlayerManager player;
@@ -120,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
                 playerCurrentDrag = !isGrounded && !preventWallSlide && IsAgainstWall()
                     && GameManager.instance.Input.playerInput.x != 0 && player.playerShape == PlayerShape.CAT ? 
                     player.data.catWallSlideDrag : player.data.drag;
-                
+
                 break;
 
             case PlayerShape.FLY:
@@ -270,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
             bounds.center.y - bounds.extents.y);
         Vector2 direction = playerBody.transform.right * playerDirection;
 
-        RaycastHit2D hit = Physics2D.Raycast(cast, direction, player.data.groundCheckDist, worldLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(cast, direction, player.data.groundCheckDist, wallJumpLayerMask);
         Color rayColor = hit.collider != null ? Color.green : Color.red;
 
         Debug.DrawRay(cast, direction * player.data.groundCheckDist, rayColor, 1);
@@ -287,8 +288,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 leftDirection = -playerBody.transform.right;
         Vector2 rightDirection = playerBody.transform.right;
 
-        RaycastHit2D leftHit = Physics2D.Raycast(playerOrigin, leftDirection, player.data.wallCheckDist, worldLayerMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(playerOrigin, rightDirection, player.data.wallCheckDist, worldLayerMask);
+        RaycastHit2D leftHit = Physics2D.Raycast(playerOrigin, leftDirection, player.data.wallCheckDist, wallJumpLayerMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(playerOrigin, rightDirection, player.data.wallCheckDist, wallJumpLayerMask);
 
         Color leftRayColor = leftHit.collider != null ? Color.green : Color.red;
         Color rightRayColor = rightHit.collider != null ? Color.green : Color.red;
