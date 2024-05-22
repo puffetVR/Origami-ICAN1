@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using static InputManager;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,13 +13,27 @@ public class UIManager : MonoBehaviour
     private ControllerUI currentSchemeData;
 
     public Image interactionPromptSprite;
+    public Image shapeshiftPromptSprite;
 
-    public GameObject interactionPrompt;
     Interactible currentInteractible;
+    public GameObject interactionPrompt;
+    public bool interactionActive = false;
+    public Color activeColor;
+    public Color unactiveColor;
+    public TextMeshProUGUI interactionText;
+    public Image interactionButton;
+    public GameObject unactiveCross;
+
+    public GameObject shapeshiftPrompt;
 
     private void Awake()
     {
         InitControlData();
+    }
+
+    private void Start()
+    {
+        RefreshUI();
     }
 
     void InitControlData()
@@ -28,6 +43,16 @@ public class UIManager : MonoBehaviour
         xbData = Resources.Load<ControllerUI>("Controllers/Xbox");
 
         currentSchemeData = pcData;
+    }
+
+    private void FixedUpdate()
+    {
+        shapeshiftPrompt.transform.position = PlayerManager.instance.shapeshiftPromptOrigin.position;
+    }
+    public void RefreshUI()
+    {
+        RefreshControlsUI();
+        RefreshPrompts(currentInteractible ? true : false);
     }
 
     public void RefreshControlsUI()
@@ -45,12 +70,18 @@ public class UIManager : MonoBehaviour
                 break;
         }
 
-        SetSprites();
+        interactionPromptSprite.sprite = currentSchemeData.interactKey;
+        shapeshiftPromptSprite.sprite = currentSchemeData.shapeshiftKey;
     }
 
-    void SetSprites()
+    void RefreshPrompts(bool state)
     {
-        interactionPromptSprite.sprite = currentSchemeData.interactKey;
+        interactionButton.color = interactionActive ? activeColor : unactiveColor;
+        interactionText.color = interactionActive ? activeColor : unactiveColor;
+
+        unactiveCross.SetActive(!interactionActive);
+        interactionPrompt.SetActive(state);
+        shapeshiftPrompt.SetActive(state && !interactionActive ? true : false);
     }
 
     public void InteractionPrompt(Interactible interactible)
@@ -58,7 +89,9 @@ public class UIManager : MonoBehaviour
         if (currentInteractible != interactible) currentInteractible = interactible;
         else return;
 
-        interactionPrompt.SetActive(interactible != null ? true : false);
+        Debug.Log("Using InteractionPrompt()");
+
+        RefreshPrompts(interactible != null ? true : false);
 
         if (interactible != null) interactionPrompt.transform.position = 
                 interactible.interactionTextOrigin != null ? interactible.interactionTextOrigin.position : interactible.transform.position;

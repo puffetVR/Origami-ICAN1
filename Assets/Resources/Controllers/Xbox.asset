@@ -15,4 +15,4 @@ MonoBehaviour:
   movementKeys: {fileID: 21300000, guid: c02a6c809678ce34999c673813c3412e, type: 3}
   downKey: {fileID: 21300000, guid: 81b6ce38a99d19f459df01f15f558769, type: 3}
   interactKey: {fileID: 21300000, guid: 1633b7aa19204ad40bf6522c50cf86ee, type: 3}
-  shapeshiftKey: {fileID: 0}
+  shapeshiftKey: {fileID: 21300000, guid: d7fe205eec8ff8946afa9736aae990ab, type: 3}

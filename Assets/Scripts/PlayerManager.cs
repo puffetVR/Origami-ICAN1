@@ -37,20 +37,35 @@ public class PlayerManager : MonoBehaviour
     private PlayerShape _playerShape;
     void OnPlayerShapeChanged(PlayerShape shape)
     {
+        GameManager.instance.UI.interactionActive = false;
+
         switch (shape)
         {
             case PlayerShape.DEFAULT:
+                GameManager.instance.UI.interactionActive = true;
                 playerSprite.sprite = defaultSprite;
+                spriteBounds.offset = data.defaultBoundsOffset;
+                spriteBounds.size = data.defaultBoundsSize;
                 break;
             case PlayerShape.CAT:
                 playerSprite.sprite = catSprite;
+                spriteBounds.offset = data.catBoundsOffset;
+                spriteBounds.size = data.catBoundsSize;
                 break;
             case PlayerShape.FLY:
                 playerSprite.sprite = flySprite;
+                spriteBounds.offset = data.flyBoundsOffset;
+                spriteBounds.size = data.flyBoundsSize;
                 break;
             default:
                 break;
         }
+
+        // Get Player Size
+        playerWidth = spriteBounds.bounds.size.x / 1.5f;
+        playerHeight = spriteBounds.bounds.size.y / 1.5f;
+
+        GameManager.instance.UI.RefreshUI();
 
         Debug.Log("<color=magenta>Current shape: " + shape + "</color>");
     }
@@ -61,9 +76,13 @@ public class PlayerManager : MonoBehaviour
     public PlayerData data;
     public PlayerMovement playerMovement { get; private set; }
     public CameraController playerCamera { get; private set; }
+
     #endregion
     public float playerWidth { get; private set; }
     public float playerHeight { get; private set; }
+    [SerializeField] private BoxCollider2D spriteBounds;
+
+    public Transform shapeshiftPromptOrigin;
 
     void Start()
     {
@@ -74,6 +93,7 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerInput();
 
+        // Handle Interactions
         if (interactibles != null)
         {
             GetTargetInteractible();
@@ -82,11 +102,11 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.UI.InteractionPrompt(targetInteractible);
         }
 
+        // Shapeshift Condition
         if (playerMovement.isGrounded && playerShape == PlayerShape.FLY) playerShape = PlayerShape.CAT;
 
-        playerWidth = playerSprite.bounds.size.x;
-        playerHeight = playerSprite.bounds.size.y;
     }
+
 
     #region Player Position
     public Vector3 playerPosition { get; private set; }
@@ -101,7 +121,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (GameManager.instance.Input.shapeshift) Shapeshift();
 
-        if (GameManager.instance.Input.interact) Interact();
+        if (GameManager.instance.Input.interactDown) Interact();
 
     }
 

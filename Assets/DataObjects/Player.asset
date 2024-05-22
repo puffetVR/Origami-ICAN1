@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 10
   airAcceleration: 2
-  minDrag: 0
-  maxDrag: 10
+  drag: 0
+  catWallSlideDrag: 15
+  flyDropDrag: 2
+  flyGlideDrag: 10
   groundCheckDist: 0.1
   wallCheckDist: 1
   shapeColXPos: 0.3
@@ -27,16 +29,17 @@ MonoBehaviour:
   catWidth: 0.7
   catBoundsOffset: {x: 0, y: 0.75}
   catBoundsSize: {x: 1.6, y: 1.5}
-  flyMinSpeed: 1.5
-  flySpeed: 10
-  flyMaxSpeed: 10
+  flySpeed: 50
+  flyDropSpeed: 30
   flyBoundsOffset: {x: 0, y: 0.625}
   flyBoundsSize: {x: 1.5, y: 1.25}
   defaultGravityScale: 1.5
   fallGravityScale: 2.5
+  diveGravityScale: 10
+  slideGravityScale: 0.2
   maxFallSpeed: 10
   jumpStrength: 10
-  wallJumpStrength: {x: 8, y: 12}
+  wallJumpStrength: {x: 8, y: 8}
   wallJumpDuration: 0.6
   coyoteTime: 0.2
   jumpBufferTime: 0.2
