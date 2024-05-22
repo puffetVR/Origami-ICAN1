@@ -52,7 +52,8 @@ public class UIManager : MonoBehaviour
     public void RefreshUI()
     {
         RefreshControlsUI();
-        RefreshPrompts(currentInteractible ? true : false);
+        RefreshInteractionPrompt(currentInteractible ? true : false);
+        RefreshShapeshiftPrompt();
     }
 
     public void RefreshControlsUI()
@@ -74,14 +75,23 @@ public class UIManager : MonoBehaviour
         shapeshiftPromptSprite.sprite = currentSchemeData.shapeshiftKey;
     }
 
-    void RefreshPrompts(bool state)
+    public void RefreshInteractionPrompt(bool state)
     {
         interactionButton.color = interactionActive ? activeColor : unactiveColor;
         interactionText.color = interactionActive ? activeColor : unactiveColor;
 
         unactiveCross.SetActive(!interactionActive);
         interactionPrompt.SetActive(state);
-        shapeshiftPrompt.SetActive(state && !interactionActive ? true : false);
+        //shapeshiftPrompt.SetActive(state && !interactionActive ? true : false);
+        RefreshShapeshiftPrompt();
+    }
+
+    public void RefreshShapeshiftPrompt()
+    {
+        bool state = currentInteractible && !interactionActive
+            || PlayerManager.instance.playerMovement.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY ? true : false;
+
+        shapeshiftPrompt.SetActive(state);
     }
 
     public void InteractionPrompt(Interactible interactible)
@@ -91,7 +101,7 @@ public class UIManager : MonoBehaviour
 
         Debug.Log("Using InteractionPrompt()");
 
-        RefreshPrompts(interactible != null ? true : false);
+        RefreshInteractionPrompt(interactible != null ? true : false);
 
         if (interactible != null) interactionPrompt.transform.position = 
                 interactible.interactionTextOrigin != null ? interactible.interactionTextOrigin.position : interactible.transform.position;

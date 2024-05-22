@@ -81,7 +81,7 @@ public class InputManager : MonoBehaviour
         {
             lastInputWasKeyboard = false;
 
-            if (Input.inputString != string.Empty) lastInputWasKeyboard = true;
+            if (Input.inputString != string.Empty || Input.GetKey(KeyCode.LeftShift)) lastInputWasKeyboard = true;
             //Debug.Log(Input.inputString);
         }
 

@@ -3263,10 +3263,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2651235723873176669, guid: aebfc3b5032dbfe478ae57398777135e, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1783
-      objectReference: {fileID: 0}
     - target: {fileID: 3460942263613768372, guid: aebfc3b5032dbfe478ae57398777135e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3310,14 +3306,6 @@ PrefabInstance:
     - target: {fileID: 4126257133007917909, guid: aebfc3b5032dbfe478ae57398777135e, type: 3}
       propertyPath: m_Name
       value: PlayerManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4274828795524273258, guid: aebfc3b5032dbfe478ae57398777135e, type: 3}
-      propertyPath: worldLayerMask.m_Bits
-      value: 1153
-      objectReference: {fileID: 0}
-    - target: {fileID: 4274828795524273258, guid: aebfc3b5032dbfe478ae57398777135e, type: 3}
-      propertyPath: wallJumpLayerMask.m_Bits
-      value: 129
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

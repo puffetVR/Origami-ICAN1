@@ -19,7 +19,7 @@ MonoBehaviour:
   flyDropDrag: 2
   flyGlideDrag: 10
   groundCheckDist: 0.1
-  wallCheckDist: 1
+  wallCheckDist: 1.25
   shapeColXPos: 0.3
   defaultSpeed: 4
   defaultWidth: 0.3

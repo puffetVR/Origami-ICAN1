@@ -102,11 +102,15 @@ public class PlayerManager : MonoBehaviour
             GameManager.instance.UI.InteractionPrompt(targetInteractible);
         }
 
-        // Shapeshift Condition
-        if (playerMovement.isGrounded && playerShape == PlayerShape.FLY) playerShape = PlayerShape.CAT;
+        // Force shapeshift back to cat when touching ground as bird
+        if (playerMovement.isGrounded && playerShape == PlayerShape.FLY && !playerMovement.isInAirZone)
+        {
+            Debug.Log("Forced shapeshift");
+            playerShape = PlayerShape.CAT;
+            playerMovement.ForceVelocity(Vector2.zero);
+        }
 
     }
-
 
     #region Player Position
     public Vector3 playerPosition { get; private set; }
@@ -127,9 +131,19 @@ public class PlayerManager : MonoBehaviour
 
     void Shapeshift()
     {
-        if (playerMovement.isGrounded) playerShape = playerShape == PlayerShape.DEFAULT
+        if (playerMovement.isGrounded)
+        {
+
+            if (playerMovement.isInAirZone)
+            {
+                playerShape = PlayerShape.FLY;
+                return;
+            }
+
+            playerShape = playerShape == PlayerShape.DEFAULT
                                             || playerShape == PlayerShape.FLY ?
                                                PlayerShape.CAT : PlayerShape.DEFAULT;
+        }
         else playerShape = playerShape == PlayerShape.DEFAULT
                         || playerShape == PlayerShape.CAT ?
                            PlayerShape.FLY : PlayerShape.CAT;
@@ -178,7 +192,13 @@ public class PlayerManager : MonoBehaviour
 
         targetInteractible = interactibles[0];
 
-        if (interactibles.Count > 1) targetInteractible = GetClosestInteractible();
+        if (targetInteractible.gameObject.activeSelf == false)
+        {
+            interactibles.Remove(targetInteractible);
+            targetInteractible = null;
+        }
+
+        if (interactibles.Count > 1 && targetInteractible != null) targetInteractible = GetClosestInteractible();
 
     }
 

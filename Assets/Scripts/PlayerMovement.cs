@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static PlayerManager;
 
@@ -42,6 +43,22 @@ public class PlayerMovement : MonoBehaviour
     private bool isHoldingInteractAfterShapeshift = false;
     private bool isDiving = false;
 
+    public bool isInAirZone
+    {
+        get { return _isInAirZone; }
+        private set
+        {
+            if (_isInAirZone == value) return;
+            _isInAirZone = value;
+            OnValueChange(_isInAirZone);
+        }
+    }
+    private bool _isInAirZone;
+    void OnValueChange(bool state)
+    {
+        GameManager.instance.UI.RefreshShapeshiftPrompt();
+    }
+
     void Start()
     {
         player = instance;
@@ -62,6 +79,12 @@ public class PlayerMovement : MonoBehaviour
         return true;
     }
 
+    public void ForceVelocity(Vector2 vel)
+    {
+        playerBody.velocity = vel;
+    }
+
+    #region Update
     void Update()
     {
         if (!IsInit()) return;
@@ -94,6 +117,39 @@ public class PlayerMovement : MonoBehaviour
 
         playerVelocity = playerBody.velocity;
         isGrounded = IsGrounded();
+    }
+    private void LateUpdate()
+    {
+        HandlePositionCaching();
+        ConfinePlayerToBounds();
+    }
+    #endregion
+
+    void HandlePlayerShape()
+    {
+        switch (player.playerShape)
+        {
+            case PlayerShape.DEFAULT:
+                playerCurrentSpeed = player.data.defaultSpeed;
+                playerCurrentDrag = player.data.drag;
+
+                playerCollider.size = new Vector2(player.data.defaultWidth, 1);
+                break;
+            case PlayerShape.CAT:
+                playerCurrentSpeed = player.data.catSpeed;
+                // Drag is handled in walljump logic
+
+                playerCollider.size = new Vector2(player.data.catWidth, 1);
+                break;
+            case PlayerShape.FLY:
+
+                //if (hasWallJumped) hasWallJumpedToFly = true;
+
+                playerCollider.size = new Vector2(player.data.catWidth, 1);
+                break;
+            default:
+                break;
+        }
     }
 
     #region Movement
@@ -220,6 +276,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("WallJump " + jumpDir);
                 playerBody.velocity = jumpDir;
                 hasWallJumped = true;
+                wallJumpCounter = 0f;
             }
         }
 
@@ -255,12 +312,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(castL, groundDirection * player.data.groundCheckDist, rayColorL, 1);
         Debug.DrawRay(castR, groundDirection * player.data.groundCheckDist, rayColorR, 1);
 
-        if (hitL.collider != null || hitR.collider != null)
-        {
-            // def gravity when grounded
-            //if (playerBody.gravityScale >= 0) playerCurrentGravity = player.data.defaultGravityScale;
-            return true;
-        }
+        if (hitL.collider != null || hitR.collider != null) return true;
         else return false;        
     }
 
@@ -284,17 +336,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (player.playerShape != PlayerShape.CAT || isGrounded) return false;
 
-        Vector2 playerOrigin = playerBody.transform.position;
+        //Vector2 playerOrigin = playerBody.transform.position;
+        Bounds bounds = playerCollider.bounds;
+        Vector2 castOrigin = new Vector2(playerBody.transform.position.x, bounds.center.y);
+
         Vector2 leftDirection = -playerBody.transform.right;
         Vector2 rightDirection = playerBody.transform.right;
 
-        RaycastHit2D leftHit = Physics2D.Raycast(playerOrigin, leftDirection, player.data.wallCheckDist, wallJumpLayerMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(playerOrigin, rightDirection, player.data.wallCheckDist, wallJumpLayerMask);
+        RaycastHit2D leftHit = Physics2D.Raycast(castOrigin, leftDirection, player.data.wallCheckDist, wallJumpLayerMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(castOrigin, rightDirection, player.data.wallCheckDist, wallJumpLayerMask);
 
         Color leftRayColor = leftHit.collider != null ? Color.green : Color.red;
         Color rightRayColor = rightHit.collider != null ? Color.green : Color.red;
-        Debug.DrawRay(playerOrigin, leftDirection * player.data.wallCheckDist, leftRayColor, 1);
-        Debug.DrawRay(playerOrigin, rightDirection * player.data.wallCheckDist, rightRayColor, 1);
+        Debug.DrawRay(castOrigin, leftDirection * player.data.wallCheckDist, leftRayColor, 1);
+        Debug.DrawRay(castOrigin, rightDirection * player.data.wallCheckDist, rightRayColor, 1);
         
         if (rightHit.collider != null)
         {
@@ -313,58 +368,36 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
-    void HandlePlayerShape()
+    #region Air Zone
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        switch (player.playerShape)
-        {
-            case PlayerShape.DEFAULT:
-                playerCurrentSpeed = player.data.defaultSpeed;
-                playerCurrentDrag = player.data.drag;
+        if (!collision.CompareTag("Pusher")) return;
 
-                playerCollider.size = new Vector2(player.data.defaultWidth, 1);
-                break;
-            case PlayerShape.CAT:
-                playerCurrentSpeed = player.data.catSpeed;
-                // Drag is handled in walljump logic
+        isInAirZone = false;
 
-                playerCollider.size = new Vector2(player.data.catWidth, 1);
-                break;
-            case PlayerShape.FLY:
-
-                //if (hasWallJumped) hasWallJumpedToFly = true;
-
-                playerCollider.size = new Vector2(player.data.catWidth, 1);
-                break;
-            default:
-                break;
-        }
+        Debug.Log("Pushing player downwards.");
+        isBeingPushedUpwards = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!collision.CompareTag("Pusher")) return;
 
+        isInAirZone = true;
+
         if (player.playerShape == PlayerShape.FLY)
         {
             Debug.Log("Pushing player upwards.");
             isBeingPushedUpwards = true;
-            
         }
         else if (playerBody.gravityScale < 0) isBeingPushedUpwards = false;
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (!collision.CompareTag("Pusher")) return;
 
-        Debug.Log("Pushing player downwards.");
-        isBeingPushedUpwards = false;
+        //if (player.playerShape != PlayerShape.FLY) isInAirZone = true;
+        //else isInAirZone = false;
+
     }
 
-    private void LateUpdate()
-    {
-        HandlePositionCaching();
-        ConfinePlayerToBounds();
-    }
+    #endregion
 
     #region Bounds stuff
     void HandleBounds()
