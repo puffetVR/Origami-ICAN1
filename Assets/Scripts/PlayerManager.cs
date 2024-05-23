@@ -91,6 +91,8 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.isPaused) return;
+
         PlayerInput();
 
         // Handle Interactions

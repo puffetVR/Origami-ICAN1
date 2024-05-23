@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static InputManager;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class UIManager : MonoBehaviour
     public GameObject unactiveCross;
 
     public GameObject shapeshiftPrompt;
+
+    public GameObject pauseMenu;
 
     private void Awake()
     {
@@ -51,6 +54,8 @@ public class UIManager : MonoBehaviour
     }
     public void RefreshUI()
     {
+        GameManager.instance.PauseGame(GameManager.instance.isPaused);
+
         RefreshControlsUI();
         RefreshInteractionPrompt(currentInteractible ? true : false);
         RefreshShapeshiftPrompt();
@@ -105,5 +110,17 @@ public class UIManager : MonoBehaviour
 
         if (interactible != null) interactionPrompt.transform.position = 
                 interactible.interactionTextOrigin != null ? interactible.interactionTextOrigin.position : interactible.transform.position;
+    }
+
+    public void GoToMainMenu()
+    {
+        Debug.Log("Going to Main menu...");
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quitting...");
+        Application.Quit();
     }
 }

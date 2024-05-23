@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Linq;
 
 public class InputManager : MonoBehaviour
 {
@@ -43,6 +42,7 @@ public class InputManager : MonoBehaviour
     public bool jumpDown { get; private set; }
     public bool jumpUp { get; private set; }
     public bool shapeshift { get; private set; }
+    public bool pause { get; private set; }
 
     bool lastInputWasKeyboard;
 
@@ -107,5 +107,6 @@ public class InputManager : MonoBehaviour
         jumpDown = Input.GetButtonDown("Jump");
         jumpUp = Input.GetButtonUp("Jump");
         shapeshift = Input.GetButtonDown("Shape");
+        pause = Input.GetButtonDown("Cancel");
     }
 }

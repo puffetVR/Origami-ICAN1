@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
     #region Singleton
@@ -19,13 +20,17 @@ public class GameManager : MonoBehaviour
     public UIManager UI;
     public InputManager Input;
 
-    public LevelData levelData;
-    //[Header("Level Stuff teehee")]
-    //public bool hasEntryTransition 
-
     public BoxCollider2D levelBounds;
     public Vector2 levelBoundsMin { get; private set; }
     public Vector2 levelBoundsMax { get; private set; }
+
+    public bool isPaused { get; private set; }
+
+    private void Update()
+    {
+        // Pause Game Input
+        if (Input.pause) PauseGame(!isPaused);
+    }
 
     private void FixedUpdate()
     {
@@ -36,5 +41,14 @@ public class GameManager : MonoBehaviour
     {
         levelBoundsMin = new Vector2(levelBounds.bounds.min.x, levelBounds.bounds.min.y);
         levelBoundsMax = new Vector2(levelBounds.bounds.max.x, levelBounds.bounds.max.y);
+    }
+
+    public void PauseGame(bool state)
+    {
+        Time.timeScale = state == true ? 0 : 1;
+
+        UI.pauseMenu.SetActive(state);
+
+        isPaused = state;
     }
 }
