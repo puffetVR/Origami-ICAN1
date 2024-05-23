@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerManager player;
     private Rigidbody2D playerBody;
     private BoxCollider2D playerCollider;
+    [SerializeField] private Transform direction;
+    [SerializeField] private TrailRenderer leftTrail;
+    [SerializeField] private TrailRenderer rightTrail;
 
     public bool hasWallJumped { private set; get; } = false;
     public bool isBeingPushedUpwards { private set; get; } = false;
@@ -93,8 +96,8 @@ public class PlayerMovement : MonoBehaviour
         HandleJump();
 
         // Player has to let go of jumping button after changing to bird to prevent misuse of its ability
-        isHoldingInteractAfterShapeshift = GameManager.instance.Input.interact && GameManager.instance.Input.shapeshift ? true : isHoldingInteractAfterShapeshift;
-        isHoldingInteractAfterShapeshift = GameManager.instance.Input.interactUp && isHoldingInteractAfterShapeshift ? false : isHoldingInteractAfterShapeshift;
+        isHoldingInteractAfterShapeshift = GameManager.instance.Input.jump && GameManager.instance.Input.shapeshift ? true : isHoldingInteractAfterShapeshift;
+        isHoldingInteractAfterShapeshift = GameManager.instance.Input.jumpUp && isHoldingInteractAfterShapeshift ? false : isHoldingInteractAfterShapeshift;
 
         if (isGrounded)
         {
@@ -102,6 +105,9 @@ public class PlayerMovement : MonoBehaviour
             //if (hasWallJumpedToFly) hasWallJumpedToFly = false;
         }
         else coyoteTimeCounter -= Time.deltaTime;
+
+        leftTrail.emitting = isBeingPushedUpwards;
+        rightTrail.emitting = isBeingPushedUpwards;
     }
 
     private void FixedUpdate()
@@ -162,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         playerBody.drag = isGrounded                                                // We're grounded
             && lGroundCheckY != rGroundCheckY                                       // We're on a slope
             && GameManager.instance.Input.playerInput.x == 0                        // The player isn't moving
-            && !GameManager.instance.Input.interact                                 // The player isn't jumping (not good with human form)
+            && !GameManager.instance.Input.jump                                     // The player isn't jumping
             ? 1000f : playerCurrentDrag;
 
         // Gravity
@@ -184,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case PlayerShape.FLY:
-                isDiving = GameManager.instance.Input.interact && !isBeingPushedUpwards && !isHoldingInteractAfterShapeshift ? true : false;
+                isDiving = GameManager.instance.Input.dive && !isBeingPushedUpwards && !isHoldingInteractAfterShapeshift ? true : false;
 
                 // Diving : Gliding
                 playerCurrentGravity = isDiving ? player.data.diveGravityScale : player.data.defaultGravityScale * 2;
@@ -218,6 +224,7 @@ public class PlayerMovement : MonoBehaviour
     void HandleDirection()
     {
         player.playerSprite.flipX = playerDirection > 0 ? false : true;
+        direction.localScale = new Vector3(playerDirection, 1, 1);
 
         if (player.playerShape == PlayerShape.CAT || player.playerShape == PlayerShape.FLY)
             playerCollider.offset = new Vector2(player.data.shapeColXPos * playerDirection, playerCollider.offset.y);
@@ -232,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
     void HandleJump()
     {
         // Jump Buffer
-        if (GameManager.instance.Input.interactDown && player.playerShape == PlayerShape.CAT) jumpBufferCounter = player.data.jumpBufferTime;
+        if (GameManager.instance.Input.jumpDown && player.playerShape == PlayerShape.CAT) jumpBufferCounter = player.data.jumpBufferTime;
         else jumpBufferCounter -= Time.deltaTime;
 
         // Reset Wall Slide Prevention
@@ -251,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Wall Jump Logic
-            if (jumpBufferCounter > 0f && GameManager.instance.Input.interactDown && CanWallJump())
+            if (jumpBufferCounter > 0f && GameManager.instance.Input.jumpDown && CanWallJump())
             {
                 playerCurrentDrag = player.data.drag;
                 Vector2 jumpDir = new Vector2(playerDirection * player.data.wallJumpStrength.x, player.data.wallJumpStrength.y);
@@ -263,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Shortens jump if not holding the jump button all the way    
-        if (GameManager.instance.Input.interactUp && playerBody.velocity.y > 0f)
+        if (GameManager.instance.Input.jumpUp && playerBody.velocity.y > 0f)
         {
             playerBody.velocity = new Vector2(playerBody.velocity.x, playerBody.velocity.y * .5f);
             if (playerBody.gravityScale >= 0) playerCurrentGravity = player.data.fallGravityScale;

@@ -5,10 +5,11 @@ public class ControllerUI : ScriptableObject
 {
     [Header("Movement")]
     public Sprite movementKeys;
-    public Sprite downKey;
+    public Sprite diveKey;
+    public Sprite jumpKey;
 
     [Header("Actions")]
-    public Sprite interactKey;
     public Sprite shapeshiftKey;
+    public Sprite interactKey;
     
 }

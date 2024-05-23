@@ -1,10 +1,11 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     GameManager Game;
     Camera mCam;
+
+    public bool followTarget = true;
 
     Vector3 cameraPosition;
     public float cameraFollowSpeed = 1f;
@@ -22,8 +23,6 @@ public class CameraController : MonoBehaviour
     public Vector2 camBoundsMin { get; private set; }
     public Vector2 camBoundsMax { get; private set; }
     public Vector2 camCenter { get; private set; }
-    //public Vector2 levelBoundsMin { get; private set; }
-    //public Vector2 levelBoundsMax { get; private set; }
 
     void Start()
     {
@@ -117,6 +116,6 @@ public class CameraController : MonoBehaviour
     void TargetFollow()
     {
         cameraPosition = new Vector3(xPos, yPos, -20);
-        transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * cameraFollowSpeed);
+        if (followTarget) transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * cameraFollowSpeed);
     }
 }

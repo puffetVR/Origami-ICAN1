@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Keyboard
   m_EditorClassIdentifier: 
   movementKeys: {fileID: 21300000, guid: a2f7489f4791df34cb2c94e6625052dd, type: 3}
-  downKey: {fileID: 21300000, guid: ab936fae5377c8949b4fbc2ca782a34c, type: 3}
-  interactKey: {fileID: 21300000, guid: e67551c71deefaf47b0e64c010173086, type: 3}
+  diveKey: {fileID: 21300000, guid: 2c34c9ff43f129a4a97ab8ed6b8f38e8, type: 3}
+  jumpKey: {fileID: 21300000, guid: e67551c71deefaf47b0e64c010173086, type: 3}
   shapeshiftKey: {fileID: 21300000, guid: f4cf24e0256c0db4097d54d12e035abd, type: 3}
+  interactKey: {fileID: 21300000, guid: d276c04319507c341afae3abcda813eb, type: 3}

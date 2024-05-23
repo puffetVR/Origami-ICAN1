@@ -37,9 +37,11 @@ public class InputManager : MonoBehaviour
     }
 
     public Vector2 playerInput { get; private set; }
-    public bool interact { get; private set; }
+    public bool dive { get; private set; }
     public bool interactDown { get; private set; }
-    public bool interactUp { get; private set; }
+    public bool jump { get; private set; }
+    public bool jumpDown { get; private set; }
+    public bool jumpUp { get; private set; }
     public bool shapeshift { get; private set; }
 
     bool lastInputWasKeyboard;
@@ -72,7 +74,7 @@ public class InputManager : MonoBehaviour
         Vector2 moveAxis = new Vector2(Input.GetAxisRaw("Horizontal"),
                                   Input.GetAxisRaw("Vertical"));
 
-        bool anyKeyDown = interactDown || shapeshift
+        bool anyKeyDown = jumpDown || shapeshift
             || Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Vertical")
             ? true : false;
 
@@ -99,9 +101,11 @@ public class InputManager : MonoBehaviour
 
     private void ButtonInput()
     {
-        interact = Input.GetButton("Interact");
+        dive = Input.GetButton("Dive");
         interactDown = Input.GetButtonDown("Interact");
-        interactUp = Input.GetButtonUp("Interact");
+        jump = Input.GetButton("Jump");
+        jumpDown = Input.GetButtonDown("Jump");
+        jumpUp = Input.GetButtonUp("Jump");
         shapeshift = Input.GetButtonDown("Shape");
     }
 }

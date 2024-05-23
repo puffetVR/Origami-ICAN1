@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public InputManager Input;
 
     public LevelData levelData;
+    //[Header("Level Stuff teehee")]
+    //public bool hasEntryTransition 
 
     public BoxCollider2D levelBounds;
     public Vector2 levelBoundsMin { get; private set; }
