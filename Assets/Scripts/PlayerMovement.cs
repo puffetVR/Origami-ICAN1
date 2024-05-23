@@ -23,15 +23,16 @@ public class PlayerMovement : MonoBehaviour
     private float coyoteTimeCounter = 0f;
     private float jumpBufferCounter = 0f;
     private float wallJumpCounter = 0f;
-    //private float flyDragShiftCounter = 0f;
+
+    private float lGroundCheckY;
+    private float rGroundCheckY;
 
     public float playerCurrentJumpPower { private set; get; } = 1.0f;
     public float playerCurrentSpeed { private set; get; } = 1f;
     private float accelerationRate;
     public float playerCurrentDrag { private set; get; } = 0f;
     public float playerCurrentGravity { private set; get; }
-    private float dragModifier = 1f;
-    private float gravityModifier = -1f;
+    private float gravityModifier = 1f;
 
     private const float positionCacheTick = 2f;
     private float timeSinceLastPosTick = positionCacheTick;
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
     // FLAGS
     public bool isGrounded { private set; get; }
     private bool preventWallSlide = false;
-    //private bool hasWallJumpedToFly = false;
     public bool keepPlayerInBounds = true;
     private bool isHoldingInteractAfterShapeshift = false;
     private bool isDiving = false;
@@ -158,24 +158,23 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     void HandleDragAndGravity()
     {
-        gravityModifier = isBeingPushedUpwards ? -1 : 1;
-        //if (isBeingPushedUpwards) playerBody.AddForce(airZone * 10);
-        //dragModifier = isBeingPushedUpwards ? 0f : 1f;
+        // Trying to prevent sliding when on slope
+        playerBody.drag = isGrounded                                                // We're grounded
+            && lGroundCheckY != rGroundCheckY                                       // We're on a slope
+            && GameManager.instance.Input.playerInput.x == 0                        // The player isn't moving
+            && !GameManager.instance.Input.interact                                 // The player isn't jumping (not good with human form)
+            ? 1000f : playerCurrentDrag;
 
+        // Gravity
+        gravityModifier = isBeingPushedUpwards ? 0 : 1;
         playerBody.gravityScale = playerCurrentGravity * gravityModifier;
-        playerBody.drag = playerCurrentDrag * dragModifier;
 
         switch (player.playerShape)
         {
             case PlayerShape.DEFAULT:
             case PlayerShape.CAT:
-                //flyDragShiftCounter = 0;
-
-                // def gravity when grounded
-                if (playerBody.gravityScale >= 0) playerCurrentGravity = player.data.defaultGravityScale;
-                
-                // Faster fall speed
-                if (playerBody.velocity.y < 0f && gravityModifier > 0) playerCurrentGravity = player.data.fallGravityScale;
+                // Faster Fall Speed
+                playerCurrentGravity = !isGrounded && playerBody.velocity.y < 0f ? player.data.fallGravityScale : player.data.defaultGravityScale;
 
                 // Cat Wall Slide
                 playerCurrentDrag = !isGrounded && !preventWallSlide && IsAgainstWall()
@@ -189,38 +188,14 @@ public class PlayerMovement : MonoBehaviour
 
                 // Diving : Gliding
                 playerCurrentGravity = isDiving ? player.data.diveGravityScale : player.data.defaultGravityScale * 2;
-                //playerCurrentDrag = isDiving ? player.data.flyDropDrag : player.data.flyGlideDrag;
                 playerCurrentDrag = player.data.flyGlideDrag;
                 playerCurrentSpeed = isDiving ? player.data.flyDropSpeed : player.data.flySpeed;
                 break;
 
-            /*
-            if (flyDragShiftCounter > 0)
-            {
-                playerCurrentSpeed = player.data.flySpeed;
-            }
-            else
-            {
-                playerCurrentSpeed = GameManager.instance.Input.interact && !isBeingPushedUpwards ? player.data.flyDropSpeed : player.data.flySpeed;
-            }
-                          
-            if (hasWallJumpedToFly)
-            {
-                if (flyDragShiftCounter < (player.data.wallJumpDuration * 1.1f))
-                {
-                    flyDragShiftCounter += Time.deltaTime;
-                }
-                else
-                {
-                    hasWallJumpedToFly = false;
-                }
-            }
-            */
-
         }
 
-        //
-        playerCurrentGravity = isBeingPushedUpwards ? 1f : playerCurrentGravity;
+        // Deprecated, handled by gravity modifier
+        //playerCurrentGravity = isBeingPushedUpwards ? 1f : playerCurrentGravity;
 
         // Clamp Vertical Velocity
         playerBody.velocity = new Vector2(playerBody.velocity.x,
@@ -319,7 +294,13 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(castL, groundDirection * player.data.groundCheckDist, rayColorL, 1);
         Debug.DrawRay(castR, groundDirection * player.data.groundCheckDist, rayColorR, 1);
 
-        if (hitL.collider != null || hitR.collider != null) return true;
+        lGroundCheckY = hitL.collider != null ? hitL.point.y : 0;
+        rGroundCheckY = hitR.collider != null ? hitR.point.y : 0;
+
+        if (hitL.collider != null || hitR.collider != null)
+        {
+            return true;
+        }
         else return false;        
     }
 
@@ -399,7 +380,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Pushing player upwards.");
             isBeingPushedUpwards = true;
         }
-        else if (playerBody.gravityScale < 0) isBeingPushedUpwards = false;
+        else isBeingPushedUpwards = false;
 
         //if (player.playerShape != PlayerShape.FLY) isInAirZone = true;
         //else isInAirZone = false;
