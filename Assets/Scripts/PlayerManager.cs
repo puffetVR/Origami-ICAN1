@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
 
         if (instance != this) Destroy(this);
 
-        playerMovement = GetComponentInChildren<PlayerMovement>();
+        move = GetComponentInChildren<PlayerMovement>();
     }
     #endregion
 
@@ -39,6 +39,10 @@ public class PlayerManager : MonoBehaviour
     {
         GameManager.instance.UI.interactionActive = false;
 
+        anim.SetLayerWeight(1, 0);
+        anim.SetLayerWeight(2, 0);
+        anim.SetLayerWeight(3, 0);
+
         switch (shape)
         {
             case PlayerShape.DEFAULT:
@@ -46,20 +50,25 @@ public class PlayerManager : MonoBehaviour
                 playerSprite.sprite = defaultSprite;
                 spriteBounds.offset = data.defaultBoundsOffset;
                 spriteBounds.size = data.defaultBoundsSize;
+                //anim.SetLayerWeight(0, 0);
                 break;
             case PlayerShape.CAT:
                 playerSprite.sprite = catSprite;
                 spriteBounds.offset = data.catBoundsOffset;
                 spriteBounds.size = data.catBoundsSize;
+                //anim.SetLayerWeight(1, 0);
                 break;
             case PlayerShape.FLY:
                 playerSprite.sprite = flySprite;
                 spriteBounds.offset = data.flyBoundsOffset;
                 spriteBounds.size = data.flyBoundsSize;
+                //anim.SetLayerWeight(2, 0);
                 break;
             default:
                 break;
         }
+
+        anim.SetLayerWeight((int)shape + 1, 1);
 
         // Get Player Size
         playerWidth = spriteBounds.bounds.size.x / 1.5f;
@@ -74,8 +83,9 @@ public class PlayerManager : MonoBehaviour
     #region Attributes
     [Header("References")]
     public PlayerData data;
-    public PlayerMovement playerMovement { get; private set; }
-    public CameraController playerCamera { get; private set; }
+    public PlayerMovement move { get; private set; }
+    public CameraController cam { get; private set; }
+    public Animator anim;
 
     #endregion
     public float playerWidth { get; private set; }
@@ -105,11 +115,11 @@ public class PlayerManager : MonoBehaviour
         }
 
         // Force shapeshift back to cat when touching ground as bird
-        if (playerMovement.isGrounded && playerShape == PlayerShape.FLY && !playerMovement.isInAirZone)
+        if (move.isGrounded && playerShape == PlayerShape.FLY && !move.isInAirZone)
         {
             Debug.Log("Forced shapeshift");
             playerShape = PlayerShape.CAT;
-            playerMovement.ForceVelocity(Vector2.zero);
+            move.ForceVelocity(Vector2.zero);
         }
 
     }
@@ -133,10 +143,10 @@ public class PlayerManager : MonoBehaviour
 
     void Shapeshift()
     {
-        if (playerMovement.isGrounded)
+        if (move.isGrounded)
         {
 
-            if (playerMovement.isInAirZone)
+            if (move.isInAirZone)
             {
                 playerShape = PlayerShape.FLY;
                 return;

@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
     public bool keepPlayerInBounds = true;
     private bool isHoldingInteractAfterShapeshift = false;
     private bool isDiving = false;
+    private bool isSliding = false;
+    private bool hasJumped;
 
     public bool isInAirZone
     {
@@ -120,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
         HandleDragAndGravity();
         HandlePlayerShape();
 
+        PlayerAnimations();
+
         player.PassPlayerPosition(transform.position);
 
         if (isBeingPushedUpwards) playerBody.velocity = new Vector2(playerBody.velocity.x + (airZone.x * 2), playerBody.velocity.y + (airZone.y * 2));
@@ -131,6 +135,12 @@ public class PlayerMovement : MonoBehaviour
     {
         HandlePositionCaching();
         ConfinePlayerToBounds();
+
+        if (hasJumped)
+        {
+            hasJumped = false;
+            player.anim.SetBool("hasJumped", hasJumped);
+        }
     }
     #endregion
 
@@ -182,9 +192,13 @@ public class PlayerMovement : MonoBehaviour
                 // Faster Fall Speed
                 playerCurrentGravity = !isGrounded && playerBody.velocity.y < 0f ? player.data.fallGravityScale : player.data.defaultGravityScale;
 
+
+                isSliding = !isGrounded && !preventWallSlide && IsAgainstWall()
+                    && GameManager.instance.Input.playerInput.x != 0 && player.playerShape == PlayerShape.CAT ?
+                    true : false;
+
                 // Cat Wall Slide
-                playerCurrentDrag = !isGrounded && !preventWallSlide && IsAgainstWall()
-                    && GameManager.instance.Input.playerInput.x != 0 && player.playerShape == PlayerShape.CAT ? 
+                playerCurrentDrag = isSliding ?
                     player.data.catWallSlideDrag : player.data.drag;
 
                 break;
@@ -251,15 +265,25 @@ public class PlayerMovement : MonoBehaviour
             // Ground Jump Logic
             if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
             {
+                player.anim.SetTrigger("jump");
+                hasJumped = true;
+                player.anim.SetBool("hasJumped", hasJumped);
+
                 if (IsAgainstWall()) preventWallSlide = true;
                 playerBody.velocity = new Vector2(playerBody.velocity.x, player.data.jumpStrength);
                 Debug.Log("Jump");
                 jumpBufferCounter = 0f;
+
+
             }
 
             // Wall Jump Logic
             if (jumpBufferCounter > 0f && GameManager.instance.Input.jumpDown && CanWallJump())
             {
+                player.anim.SetTrigger("jump");
+                hasJumped = true;
+                player.anim.SetBool("hasJumped", hasJumped);
+
                 playerCurrentDrag = player.data.drag;
                 Vector2 jumpDir = new Vector2(playerDirection * player.data.wallJumpStrength.x, player.data.wallJumpStrength.y);
                 Debug.Log("WallJump " + jumpDir);
@@ -450,5 +474,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     #endregion
+
+    void PlayerAnimations()
+    {
+        player.anim.SetFloat("X Vel", Mathf.Abs(playerVelocity.x));
+        player.anim.SetFloat("Y Vel", playerVelocity.y);
+        player.anim.SetFloat("Vel", Mathf.Clamp(playerVelocity.sqrMagnitude, 0, 20));
+        player.anim.SetBool("isGrounded", isGrounded);
+        player.anim.SetBool("isDiving", isDiving);
+        player.anim.SetBool("hasWallJumped", hasWallJumped);
+        player.anim.SetBool("isSliding", isSliding);
+        player.anim.SetBool("isBird", player.playerShape == PlayerShape.FLY ? true : false);
+    }
 
 }

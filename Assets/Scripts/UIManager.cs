@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
     public void RefreshShapeshiftPrompt()
     {
         bool state = currentInteractible && !interactionActive
-            || PlayerManager.instance.playerMovement.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY ? true : false;
+            || PlayerManager.instance.move.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY ? true : false;
 
         shapeshiftPrompt.SetActive(state);
     }

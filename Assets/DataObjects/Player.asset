@@ -25,7 +25,7 @@ MonoBehaviour:
   defaultWidth: 0.3
   defaultBoundsOffset: {x: 0, y: 0.75}
   defaultBoundsSize: {x: 0.6, y: 1.5}
-  catSpeed: 5
+  catSpeed: 10
   catWidth: 0.7
   catBoundsOffset: {x: 0, y: 0.75}
   catBoundsSize: {x: 1.6, y: 1.5}
