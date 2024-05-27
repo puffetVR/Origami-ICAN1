@@ -421,9 +421,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5914845965331815371}
-  - component: {fileID: 2651235723873176669}
-  - component: {fileID: 7901594326252460881}
   - component: {fileID: 2563878244736836134}
+  - component: {fileID: 2651235723873176669}
+  - component: {fileID: 5477247812722365735}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -446,6 +446,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3460942263613768372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2563878244736836134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4297830791350080503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0017cbe584ba5c8458503b57869cc632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTarget: 1
+  cameraFollowSpeed: 5
+  cameraZoom: 5.45
+  cameraZoomSpeed: 2
+  cameraTarget: {fileID: 5222915142824584901}
+  xPos: 0
+  yPos: 0
 --- !u!20 &2651235723873176669
 Camera:
   m_ObjectHideFlags: 0
@@ -497,15 +516,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7901594326252460881
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4297830791350080503}
-  m_Enabled: 1
---- !u!114 &2563878244736836134
+--- !u!114 &5477247812722365735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -514,16 +525,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4297830791350080503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017cbe584ba5c8458503b57869cc632, type: 3}
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followTarget: 1
-  cameraFollowSpeed: 5
-  cameraZoom: 5.45
-  cameraZoomSpeed: 2
-  cameraTarget: {fileID: 5222915142824584901}
-  xPos: 0
-  yPos: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &4842921014581208514
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd214b6c67d1d74eb213144f97ad886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedXMovement: 0
   worldLayerMask:
     serializedVersion: 2
     m_Bits: 1153
@@ -802,7 +808,6 @@ MonoBehaviour:
   direction: {fileID: 1638354246436812076}
   leftTrail: {fileID: 7746250523866425391}
   rightTrail: {fileID: 6562846269462148526}
-  keepPlayerInBounds: 1
 --- !u!61 &2011159864758717705
 BoxCollider2D:
   m_ObjectHideFlags: 0
