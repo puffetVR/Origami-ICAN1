@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lastGroundedPosition;
     private Vector2 airZone;
 
+    public float forcedXMovement;
+
     [SerializeField] private LayerMask worldLayerMask;
     [SerializeField] private LayerMask wallJumpLayerMask;
 
@@ -43,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
     // FLAGS
     public bool isGrounded { private set; get; }
     private bool preventWallSlide = false;
-    public bool keepPlayerInBounds = true;
     private bool isHoldingInteractAfterShapeshift = false;
     private bool isDiving = false;
     private bool isSliding = false;
@@ -175,10 +176,10 @@ public class PlayerMovement : MonoBehaviour
     void HandleDragAndGravity()
     {
         // Trying to prevent sliding when on slope
-        playerBody.drag = isGrounded                                                // We're grounded
-            && lGroundCheckY != rGroundCheckY                                       // We're on a slope
-            && GameManager.instance.Input.playerInput.x == 0                        // The player isn't moving
-            && !GameManager.instance.Input.jump                                     // The player isn't jumping
+        playerBody.drag = isGrounded                                                 // We're grounded
+            && lGroundCheckY != rGroundCheckY                                        // We're on a slope
+            && GameManager.instance.Input.playerInput.x == 0 && forcedXMovement == 0 // The player isn't moving
+            && !GameManager.instance.Input.jump                                      // The player isn't jumping
             ? 1000f : playerCurrentDrag;
 
         // Gravity
@@ -228,7 +229,10 @@ public class PlayerMovement : MonoBehaviour
         accelerationRate = hasWallJumped && !isGrounded
             || player.playerShape == PlayerShape.FLY ? player.data.airAcceleration : player.data.acceleration;
 
-        float moveInput = GameManager.instance.Input.playerInput.x * playerCurrentSpeed;
+        float moveDir = GameManager.instance.Input.playerInput.x + forcedXMovement;
+
+        //float moveInput = GameManager.instance.Input.playerInput.x * playerCurrentSpeed;
+        float moveInput = moveDir * playerCurrentSpeed;
         float speed = moveInput - playerBody.velocity.x;
         float playerMovement = speed * accelerationRate;
 
@@ -387,7 +391,7 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
-    #region Air Zone
+    #region Trigger Stuff (LevelEnd, Air Zone)
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Pusher")) return;
@@ -412,10 +416,16 @@ public class PlayerMovement : MonoBehaviour
             isBeingPushedUpwards = true;
         }
         else isBeingPushedUpwards = false;
+    }
 
-        //if (player.playerShape != PlayerShape.FLY) isInAirZone = true;
-        //else isInAirZone = false;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Level End
+        if (!collision.CompareTag("Finish")) return;
 
+        StartCoroutine(GameManager.instance.LevelEnd());
+
+        Debug.Log("Ending level.");
     }
 
     #endregion
@@ -423,7 +433,7 @@ public class PlayerMovement : MonoBehaviour
     #region Bounds stuff
     void HandleBounds()
     {
-        if (!keepPlayerInBounds) return;
+        if (!GameManager.instance.keepPlayerInBounds) return;
 
         float minX = GameManager.instance.levelBoundsMin.x + player.playerWidth;
         float maxX = GameManager.instance.levelBoundsMax.x - player.playerWidth;
@@ -445,7 +455,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ConfinePlayerToBounds()
     {
-        if (!keepPlayerInBounds) return;
+        if (!GameManager.instance.keepPlayerInBounds) return;
 
         if (!IsPlayerInCameraBounds())
         {

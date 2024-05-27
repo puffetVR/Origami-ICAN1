@@ -2110,6 +2110,7 @@ MonoBehaviour:
   UI: {fileID: 5186545237944542756}
   Input: {fileID: 7791756064287630667}
   levelBounds: {fileID: 8740192585877540228}
+  fadeInLevel: 1
 --- !u!1 &7465092006758440663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2169,7 @@ MonoBehaviour:
   unactiveCross: {fileID: 4786875707325398836}
   shapeshiftPrompt: {fileID: 4495989787396736573}
   pauseMenu: {fileID: 3242021648395919687}
+  fader: {fileID: 7444604643862075167}
 --- !u!1 &7647171650795773445
 GameObject:
   m_ObjectHideFlags: 0

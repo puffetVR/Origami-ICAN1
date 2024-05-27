@@ -1,5 +1,6 @@
+using System.Collections;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,18 +14,25 @@ public class GameManager : MonoBehaviour
         if (instance != this) Destroy(this);
 
         Player = PlayerManager.instance;
+
+        if (fadeInLevel) StartCoroutine(UI.FadeOut());
     }
     #endregion
 
-    public PlayerManager Player { get; private set; }
+    public PlayerManager Player;
     public UIManager UI;
     public InputManager Input;
 
+    public bool isPaused { get; private set; }
+    public bool lockPlayerControl { get; private set; } = false;
+    public bool keepPlayerInBounds { get; private set; } = true;
+
+    [Header("Level Stuff")]
+    [SerializeField] private int nextLevelIndex;
     public BoxCollider2D levelBounds;
     public Vector2 levelBoundsMin { get; private set; }
     public Vector2 levelBoundsMax { get; private set; }
-
-    public bool isPaused { get; private set; }
+    public bool fadeInLevel = true;
 
     private void Update()
     {
@@ -51,4 +59,19 @@ public class GameManager : MonoBehaviour
 
         isPaused = state;
     }
+
+    public IEnumerator LevelEnd()
+    {
+        lockPlayerControl = true;
+        keepPlayerInBounds = false;
+        Player.move.forcedXMovement = 1;
+
+        StartCoroutine(UI.FadeIn());
+
+        yield return new WaitUntil(()=> UI.hasFadedIn);
+
+        Debug.Log("Loading next level.");
+        SceneManager.LoadScene(nextLevelIndex);
+    }
+
 }

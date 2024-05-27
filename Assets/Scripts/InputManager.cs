@@ -65,6 +65,12 @@ public class InputManager : MonoBehaviour
 
     private void AxisInput()
     {
+        if (GameManager.instance.lockPlayerControl)
+        {
+            playerInput = Vector2.zero;
+            return;
+        }
+
         playerInput = new Vector2(Input.GetAxisRaw("Horizontal"),
                                   Input.GetAxisRaw("Vertical"));
     }
@@ -101,12 +107,14 @@ public class InputManager : MonoBehaviour
 
     private void ButtonInput()
     {
+        if (GameManager.instance.lockPlayerControl) return;
+
+        pause = Input.GetButtonDown("Cancel");
         dive = Input.GetButton("Dive");
         interactDown = Input.GetButtonDown("Interact");
         jump = Input.GetButton("Jump");
         jumpDown = Input.GetButtonDown("Jump");
         jumpUp = Input.GetButtonUp("Jump");
         shapeshift = Input.GetButtonDown("Shape");
-        pause = Input.GetButtonDown("Cancel");
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using static InputManager;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class UIManager : MonoBehaviour
     public GameObject shapeshiftPrompt;
 
     public GameObject pauseMenu;
+    public Image fader;
+    public bool hasFadedIn { get; private set; } = false;
 
     private void Awake()
     {
@@ -108,7 +111,7 @@ public class UIManager : MonoBehaviour
 
         RefreshInteractionPrompt(interactible != null ? true : false);
 
-        if (interactible != null) interactionPrompt.transform.position = 
+        if (interactible != null) interactionPrompt.transform.position =
                 interactible.interactionTextOrigin != null ? interactible.interactionTextOrigin.position : interactible.transform.position;
     }
 
@@ -122,5 +125,36 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Quitting...");
         Application.Quit();
+    }
+
+    public IEnumerator FadeIn()
+    {
+        hasFadedIn = false;
+
+        Color fadeCol = fader.color;
+        
+        for (float alpha = 0f; alpha <= 1; alpha += 2f * Time.deltaTime)
+        {
+            fadeCol.a = alpha;
+            fader.color = fadeCol;
+            yield return null;
+        }
+
+        hasFadedIn = true;
+    }
+
+    public IEnumerator FadeOut()
+    {
+        Color fadeCol = fader.color;
+        //fadeCol.a = 1;
+
+        for (float alpha = 1f; alpha <= 1; alpha -= 1f * Time.deltaTime)
+        {
+            if (alpha <= 0f) yield break;
+
+            fadeCol.a = alpha;
+            fader.color = fadeCol;
+            yield return null;
+        }
     }
 }

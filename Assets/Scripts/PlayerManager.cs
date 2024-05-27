@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +13,7 @@ public class PlayerManager : MonoBehaviour
         if (instance != this) Destroy(this);
 
         move = GetComponentInChildren<PlayerMovement>();
+        GameManager.instance.Player = this;
     }
     #endregion
 
