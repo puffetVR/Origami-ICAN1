@@ -421,11 +421,19 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Level End
-        if (!collision.CompareTag("Finish")) return;
+        if (collision.CompareTag("Finish"))
+        {
+            StartCoroutine(GameManager.instance.LevelEnd());
 
-        StartCoroutine(GameManager.instance.LevelEnd());
+            Debug.Log("Ending level.");
+        }
 
-        Debug.Log("Ending level.");
+        if (collision.CompareTag("Kill"))
+        {
+            Debug.Log("AAAA");
+
+            StartCoroutine(GameManager.instance.KillPlayer());
+        }
     }
 
     #endregion
@@ -459,9 +467,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (!IsPlayerInCameraBounds())
         {
-            playerBody.velocity = Vector2.zero;
-            playerBody.position = lastGroundedPosition;
+            ResetPlayerToLastKnownPosition();
         }
+    }
+
+    public void ResetPlayerToLastKnownPosition()
+    {
+        playerBody.velocity = Vector2.zero;
+        playerBody.position = lastGroundedPosition;
     }
 
     void HandlePositionCaching()

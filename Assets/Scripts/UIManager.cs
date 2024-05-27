@@ -4,10 +4,10 @@ using static InputManager;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
-
     private ControllerUI pcData;
     private ControllerUI psData;
     private ControllerUI xbData;
@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
 
     public Image interactionPromptSprite;
     public Image shapeshiftPromptSprite;
+
+    public List<UIElement> uiElements = new List<UIElement>();
 
     Interactible currentInteractible;
     public GameObject interactionPrompt;
@@ -30,7 +32,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject pauseMenu;
     public Image fader;
-    public bool hasFadedIn { get; private set; } = false;
+    public bool hasFadedIn = false;
+    public bool hasFadedOut = false;
 
     private void Awake()
     {
@@ -53,7 +56,12 @@ public class UIManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        shapeshiftPrompt.transform.position = PlayerManager.instance.shapeshiftPromptOrigin.position;
+        if (PlayerManager.instance) shapeshiftPrompt.transform.position = PlayerManager.instance.shapeshiftPromptOrigin.position;
+    }
+
+    private void LateUpdate()
+    {
+        //if (hasFadedIn) hasFadedIn = false;
     }
     public void RefreshUI()
     {
@@ -79,8 +87,13 @@ public class UIManager : MonoBehaviour
                 break;
         }
 
-        interactionPromptSprite.sprite = currentSchemeData.interactKey;
-        shapeshiftPromptSprite.sprite = currentSchemeData.shapeshiftKey;
+        foreach (var item in uiElements)
+        {
+            item.SetUISprite(currentSchemeData);
+        }
+
+        //interactionPromptSprite.sprite = currentSchemeData.interactKey;
+        //shapeshiftPromptSprite.sprite = currentSchemeData.shapeshiftKey;
     }
 
     public void RefreshInteractionPrompt(bool state)
@@ -96,6 +109,8 @@ public class UIManager : MonoBehaviour
 
     public void RefreshShapeshiftPrompt()
     {
+        if (!PlayerManager.instance) return;
+
         bool state = currentInteractible && !interactionActive
             || PlayerManager.instance.move.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY ? true : false;
 
@@ -130,31 +145,52 @@ public class UIManager : MonoBehaviour
     public IEnumerator FadeIn()
     {
         hasFadedIn = false;
+        Debug.Log("Start fade in");
 
         Color fadeCol = fader.color;
         
         for (float alpha = 0f; alpha <= 1; alpha += 2f * Time.deltaTime)
         {
+            if (hasFadedIn)
+            {
+                Debug.Log("Skipped fade in");
+                fadeCol.a = 1;
+                fader.color = fadeCol;
+                yield break;
+            }
+
             fadeCol.a = alpha;
             fader.color = fadeCol;
             yield return null;
         }
 
         hasFadedIn = true;
+        Debug.Log("End fade in");
     }
 
     public IEnumerator FadeOut()
     {
-        Color fadeCol = fader.color;
-        //fadeCol.a = 1;
+        hasFadedOut = false;
+        Debug.Log("Start fade out");
 
-        for (float alpha = 1f; alpha <= 1; alpha -= 1f * Time.deltaTime)
+        Color fadeCol = fader.color;
+
+        for (float alpha = 1f; alpha >= 0; alpha -= 1f * Time.deltaTime)
         {
-            if (alpha <= 0f) yield break;
+            if (hasFadedOut)
+            {
+                Debug.Log("Skipped fade out");
+                fadeCol.a = 0;
+                fader.color = fadeCol;
+                yield break;
+            }
 
             fadeCol.a = alpha;
             fader.color = fadeCol;
             yield return null;
         }
+
+        hasFadedOut = true;
+        Debug.Log("End fade out");
     }
 }

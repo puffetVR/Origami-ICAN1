@@ -66,12 +66,32 @@ public class GameManager : MonoBehaviour
         keepPlayerInBounds = false;
         Player.move.forcedXMovement = 1;
 
+        StartCoroutine(LoadNextLevel());
+
+        yield return null;
+    }
+
+    public IEnumerator LoadNextLevel()
+    {
         StartCoroutine(UI.FadeIn());
 
-        yield return new WaitUntil(()=> UI.hasFadedIn);
+        yield return new WaitUntil(() => UI.hasFadedIn);
 
         Debug.Log("Loading next level.");
         SceneManager.LoadScene(nextLevelIndex);
+    }
+
+    public IEnumerator KillPlayer()
+    {
+        Player.cam.followTarget = false;
+        StartCoroutine(UI.FadeIn());
+
+        yield return new WaitUntil(() => UI.hasFadedIn);
+
+        Player.move.ResetPlayerToLastKnownPosition();
+
+        StartCoroutine(UI.FadeOut());
+        Player.cam.followTarget = true;
     }
 
 }

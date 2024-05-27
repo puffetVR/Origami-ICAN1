@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
         if (instance != this) Destroy(this);
 
         move = GetComponentInChildren<PlayerMovement>();
+        cam = GetComponentInChildren<CameraController>();
         GameManager.instance.Player = this;
     }
     #endregion
