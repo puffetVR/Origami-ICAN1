@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1856771534953709904}
   - component: {fileID: 7317996594599607003}
+  - component: {fileID: 8739107943346153285}
   m_Layer: 0
   m_Name: Tree4
   m_TagString: Untagged
@@ -77,23 +78,80 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -2.0173302, y: 15.179984}
-      - {x: -2.734994, y: 15.521123}
-      - {x: -2.8728352, y: 12.823892}
-      - {x: -2.6904354, y: 10.652187}
-      - {x: -2.8391, y: 9.58132}
-      - {x: -2.9704704, y: -0.5981451}
-      - {x: -3.1900368, y: -6.56985}
-      - {x: -3.1543217, y: -10.334111}
+    - - {x: -0.9488535, y: -9.847807}
+      - {x: -3.0454013, y: -9.606575}
+      - {x: -2.991459, y: -10.175867}
+      - {x: -3.1149776, y: -10.415421}
+      - {x: -3.1991098, y: -11.253326}
+      - {x: -3.4242954, y: -11.465431}
       - {x: -3.510168, y: -12.708444}
       - {x: -3.1177306, y: -20.36744}
       - {x: 1.6581455, y: -20.432312}
       - {x: 1.719326, y: -12.896846}
-      - {x: 1.030344, y: -6.815125}
-      - {x: 1.1082039, y: -3.8859515}
-      - {x: 1.032507, y: 1.8549933}
-      - {x: 1.2153397, y: 7.4716477}
-      - {x: 1.1132326, y: 15.2616415}
+      - {x: 1.2770209, y: -9.466902}
+  m_UseDelaunayMesh: 0
+--- !u!60 &8739107943346153285
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4591532420296632937}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.822752, y: 1.4995279}
+      - {x: 0.90975094, y: 2.2459736}
+      - {x: 0.93228245, y: 7.381176}
+      - {x: 1.1492586, y: 8.455107}
+      - {x: 1.0046649, y: 9.121996}
+      - {x: 1.1380644, y: 15.216593}
+      - {x: -2.7800584, y: 15.574951}
+      - {x: -2.7824683, y: 12.6789}
+      - {x: -2.4950223, y: 10.93054}
+      - {x: -2.4583151, y: 10.125004}
+      - {x: -2.7892535, y: 9.28163}
+      - {x: -2.739408, y: 8.815318}
+      - {x: -2.8644512, y: 0.8840027}
+      - {x: -2.781771, y: 0.22917461}
+      - {x: -2.8194554, y: -0.19112417}
+      - {x: -3.0791721, y: -6.339141}
+      - {x: 0.9379946, y: -6.1065245}
+      - {x: 0.9510565, y: 0.30901712}
   m_UseDelaunayMesh: 0
 --- !u!1 &6757518728451456530
 GameObject:
