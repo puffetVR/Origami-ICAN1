@@ -5,7 +5,7 @@ using static PlayerManager;
 public class PlayerMovement : MonoBehaviour
 {
     // VECTORS
-    private Vector2 playerVelocity;
+    public Vector2 playerVelocity { get; private set; }
     private int playerDirection = 1;
     private Vector2 lastGroundedPosition;
     private Vector2 airZone;
@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
         player = instance;
         playerBody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
+
+        lastGroundedPosition = transform.position;
     }
 
     bool IsInit()
@@ -343,7 +345,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Bounds bounds = playerCollider.bounds;
         Vector2 cast = new Vector2(playerDirection > 0 ? bounds.center.x + bounds.extents.x : bounds.center.x - bounds.extents.x,
-            bounds.center.y - bounds.extents.y);
+            bounds.center.y - bounds.extents.y + 1f);
         Vector2 direction = playerBody.transform.right * playerDirection;
 
         RaycastHit2D hit = Physics2D.Raycast(cast, direction, player.data.groundCheckDist, wallJumpLayerMask);

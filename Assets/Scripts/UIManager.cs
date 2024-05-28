@@ -112,7 +112,8 @@ public class UIManager : MonoBehaviour
         if (!PlayerManager.instance) return;
 
         bool state = currentInteractible && !interactionActive
-            || PlayerManager.instance.move.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY ? true : false;
+            || PlayerManager.instance.move.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY && GameManager.instance.unlockBird
+            ? true : false;
 
         shapeshiftPrompt.SetActive(state);
     }

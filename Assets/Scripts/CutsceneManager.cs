@@ -8,7 +8,7 @@ public class CutsceneManager : MonoBehaviour
     public Image currentSlide;
     public List<Sprite> sprites = new List<Sprite>();
     int currentSlideIndex = -1;
-    bool isReadyForNextSlide = false;
+    //bool isReadyForNextSlide = false;
 
     public GameObject skipPrompt;
 

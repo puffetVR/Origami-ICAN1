@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -95,6 +97,8 @@ public class PlayerManager : MonoBehaviour
 
     public Transform shapeshiftPromptOrigin;
 
+    public Transform playerPosToBook;
+
     void Start()
     {
         OnPlayerShapeChanged(playerShape);
@@ -144,10 +148,10 @@ public class PlayerManager : MonoBehaviour
 
     void Shapeshift()
     {
-        if (move.isGrounded)
+        if (move.isGrounded && GameManager.instance.unlockCat)
         {
 
-            if (move.isInAirZone)
+            if (move.isInAirZone && GameManager.instance.unlockBird)
             {
                 playerShape = PlayerShape.FLY;
                 return;
@@ -157,9 +161,12 @@ public class PlayerManager : MonoBehaviour
                                             || playerShape == PlayerShape.FLY ?
                                                PlayerShape.CAT : PlayerShape.DEFAULT;
         }
-        else playerShape = playerShape == PlayerShape.DEFAULT
-                        || playerShape == PlayerShape.CAT ?
-                           PlayerShape.FLY : PlayerShape.CAT;
+        
+        else if (GameManager.instance.unlockBird && GameManager.instance.unlockCat) 
+            playerShape = playerShape == PlayerShape.DEFAULT
+            || playerShape == PlayerShape.CAT ?
+            PlayerShape.FLY : PlayerShape.CAT;
+
     }
 
     #region Interaction
@@ -234,4 +241,50 @@ public class PlayerManager : MonoBehaviour
         return currentTarget;
     }
     #endregion
+
+    public void BookCutscene()
+    {
+        StartCoroutine(BookCutsceneRoutine());
+    }
+
+    IEnumerator BookCutsceneRoutine()
+    {
+
+
+        GameManager.instance.lockPlayerControl = true;
+
+        // Move player to pos
+        move.forcedXMovement = 1;
+
+        yield return new WaitUntil(() => move.playerVelocity.x == 0);
+
+        move.forcedXMovement = 0;
+
+        // When in pos, trigger animation
+        anim.SetTrigger("climb");
+        //yield return new WaitUntil(() => anim.);
+
+
+        // get book pos
+        Vector2 oui = GameObject.Find("BookPos").transform.position;
+        yield return null;
+
+        // Make player climb book (kinematic rb, move rb position to above book)
+        Rigidbody2D rb = move.GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+        rb.position = oui;
+        yield return null;
+
+        // Spawn invisible wall so player cant get down from book
+
+        // Lift book up
+
+        // Level end on shelf
+
+        GameObject.Find("BookWall").GetComponent<BoxCollider2D>().enabled = true;
+        rb.isKinematic = false;
+        GameManager.instance.lockPlayerControl = false;
+
+        yield return null;
+    }
 }

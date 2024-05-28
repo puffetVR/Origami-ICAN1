@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public InputManager Input;
 
     public bool isPaused { get; private set; }
-    public bool lockPlayerControl { get; private set; } = false;
+    public bool lockPlayerControl = false;
     public bool keepPlayerInBounds { get; private set; } = true;
 
     [Header("Level Stuff")]
@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
     public Vector2 levelBoundsMin { get; private set; }
     public Vector2 levelBoundsMax { get; private set; }
     public bool fadeInLevel = true;
+
+    public PlayerManager.PlayerShape defaultShape;
+    
+    public bool unlockCat = true;
+    public bool unlockBird = true;
 
     private void Update()
     {

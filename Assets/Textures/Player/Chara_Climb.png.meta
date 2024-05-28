@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 140
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -108,7 +108,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Chara_Climb_0
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 4328
+        width: 773
+        height: 1454
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4607796f88303f24487335fe4834541c
+      internalID: -1994509108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chara_Climb_1
+      rect:
+        serializedVersion: 2
+        x: 2912
+        y: 4289
+        width: 539
+        height: 1442
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04e6dd3bcfb8c1147a920f011e947b3a
+      internalID: -121405618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chara_Climb_2
+      rect:
+        serializedVersion: 2
+        x: 4868
+        y: 4277
+        width: 875
+        height: 1202
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e76477e29605a14bb697d1e980586ef
+      internalID: 964718402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chara_Climb_3
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 2252
+        width: 1147
+        height: 902
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05558fdadc907e4587ea82351413ab7
+      internalID: -381318324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chara_Climb_4
+      rect:
+        serializedVersion: 2
+        x: 2513
+        y: 2333
+        width: 1235
+        height: 602
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df44506df5e865e4dbd40d65d3dbcb6c
+      internalID: 810009578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chara_Climb_5
+      rect:
+        serializedVersion: 2
+        x: 4778
+        y: 2292
+        width: 821
+        height: 811
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bc52b578d230c9498c33ca9061233be
+      internalID: 368130530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Chara_Climb_6
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 230
+        width: 626
+        height: 1373
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10a8992008e90e249a7b0745871b8c0a
+      internalID: 1920731640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +266,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Chara_Climb_0: -1994509108
+      Chara_Climb_1: -121405618
+      Chara_Climb_2: 964718402
+      Chara_Climb_3: -381318324
+      Chara_Climb_4: 810009578
+      Chara_Climb_5: 368130530
+      Chara_Climb_6: 1920731640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

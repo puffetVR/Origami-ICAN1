@@ -1309,6 +1309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5049975904046291758}
+  - component: {fileID: 278785988143447003}
   m_Layer: 0
   m_Name: ShapeshiftPrompt
   m_TagString: Untagged
@@ -1337,6 +1338,20 @@ RectTransform:
   m_AnchoredPosition: {x: -300, y: 830}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &278785988143447003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4495989787396736573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb769efc7b6eb204cb8b10682cdce426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eType: 1
+  image: {fileID: 3586235460150846997}
 --- !u!1 &4786875707325398836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,6 +2084,8 @@ MonoBehaviour:
   nextLevelIndex: 0
   levelBounds: {fileID: 8740192585877540228}
   fadeInLevel: 1
+  unlockCat: 1
+  unlockBird: 1
 --- !u!114 &1022503106443526907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,6 +2147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPromptSprite: {fileID: 2941335480665021854}
   shapeshiftPromptSprite: {fileID: 3586235460150846997}
+  uiElements: []
   interactionPrompt: {fileID: 8844159762694905663}
   interactionActive: 0
   activeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2140,6 +2158,8 @@ MonoBehaviour:
   shapeshiftPrompt: {fileID: 4495989787396736573}
   pauseMenu: {fileID: 3242021648395919687}
   fader: {fileID: 7444604643862075167}
+  hasFadedIn: 0
+  hasFadedOut: 0
 --- !u!1 &7647171650795773445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2205,7 +2225,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e67551c71deefaf47b0e64c010173086, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d276c04319507c341afae3abcda813eb, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2327,6 +2347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7912262192171574267}
+  - component: {fileID: 6463315605940248287}
   m_Layer: 0
   m_Name: Interaction Prompt
   m_TagString: Untagged
@@ -2356,6 +2377,20 @@ RectTransform:
   m_AnchoredPosition: {x: -647, y: 830}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6463315605940248287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8844159762694905663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb769efc7b6eb204cb8b10682cdce426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eType: 0
+  image: {fileID: 2941335480665021854}
 --- !u!1 &8866477631513644464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,8 +2527,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3484696440144936984, guid: 4a3711e03529e7f4ab0d8db884fbdbbb, type: 3}
+      propertyPath: m_Size.x
+      value: 50.92023
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484696440144936984, guid: 4a3711e03529e7f4ab0d8db884fbdbbb, type: 3}
       propertyPath: m_Size.y
       value: 22.018833
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484696440144936984, guid: 4a3711e03529e7f4ab0d8db884fbdbbb, type: 3}
+      propertyPath: m_Offset.x
+      value: 1.3429356
       objectReference: {fileID: 0}
     - target: {fileID: 3484696440144936984, guid: 4a3711e03529e7f4ab0d8db884fbdbbb, type: 3}
       propertyPath: m_Offset.y
