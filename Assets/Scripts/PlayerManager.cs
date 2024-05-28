@@ -99,8 +99,11 @@ public class PlayerManager : MonoBehaviour
 
     public Transform playerPosToBook;
 
+    float t = 0;
+
     void Start()
     {
+        playerShape = GameManager.instance.defaultShape;
         OnPlayerShapeChanged(playerShape);
     }
 
@@ -262,8 +265,8 @@ public class PlayerManager : MonoBehaviour
 
         // When in pos, trigger animation
         anim.SetTrigger("climb");
-        //yield return new WaitUntil(() => anim.);
 
+        yield return new WaitForSeconds(1);
 
         // get book pos
         Vector2 oui = GameObject.Find("BookPos").transform.position;
@@ -273,15 +276,20 @@ public class PlayerManager : MonoBehaviour
         Rigidbody2D rb = move.GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
         rb.position = oui;
-        yield return null;
+
+        yield return new WaitUntil(() => Vector2.Distance(rb.position, oui) == 0);
 
         // Spawn invisible wall so player cant get down from book
+        GameObject.Find("BookWall").GetComponent<BoxCollider2D>().enabled = true;
+        yield return null;
 
         // Lift book up
+        Transform b = GameObject.Find("Book").transform;
+        b.position = new Vector2(b.position.x, .35f);
 
         // Level end on shelf
 
-        GameObject.Find("BookWall").GetComponent<BoxCollider2D>().enabled = true;
+
         rb.isKinematic = false;
         GameManager.instance.lockPlayerControl = false;
 
