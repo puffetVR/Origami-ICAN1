@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4110989087695297372}
   - component: {fileID: 5217353605166174750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ForestGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251163679399770088}
   - component: {fileID: 625896345787459506}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: fore_grass_(devant)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5782584549345902201}
   - component: {fileID: 6449003246549482475}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: back_grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2522910411867580751}
   - component: {fileID: 368053639935634420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 'path (middle) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}

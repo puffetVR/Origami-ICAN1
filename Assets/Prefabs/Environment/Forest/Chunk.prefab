@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6305210176506607539}
   - component: {fileID: 6052297681418855123}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6800552096158198204}
   - component: {fileID: 6630903222883170785}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: low
   m_TagString: Untagged
   m_Icon: {fileID: 0}

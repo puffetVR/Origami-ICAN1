@@ -1,0 +1,1 @@
+mur et toit/plateforme movable, pour faciliter tte la partie mise en place sur unity (j'ai repris les dimensions du lvl design sur discord)
