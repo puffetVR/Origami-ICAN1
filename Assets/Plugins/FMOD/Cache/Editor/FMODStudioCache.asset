@@ -69,7 +69,7 @@ MonoBehaviour:
   Path: Assets/Sound/FMOD/Origami/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638525330809744828
+  lastModified: 638525325000000000
   FileSizes:
   - Name: Desktop
     Value: 23649376
@@ -103,7 +103,7 @@ MonoBehaviour:
   - {fileID: -1382327861196167885}
   StringsBanks:
   - {fileID: 2797784822608993115}
-  cacheTime: 638525330809865418
+  cacheTime: 638525325000000000
   cacheVersion: 131616
 --- !u!114 &80158067493346852
 MonoBehaviour:
@@ -201,7 +201,7 @@ MonoBehaviour:
   Path: Assets/Sound/FMOD/Origami/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638525330809865418
+  lastModified: 638525325000000000
   FileSizes:
   - Name: Desktop
     Value: 1060
