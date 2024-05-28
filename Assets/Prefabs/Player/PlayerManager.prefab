@@ -412,6 +412,7 @@ MonoBehaviour:
   anim: {fileID: 7710784092402762520}
   spriteBounds: {fileID: 6230614986425071149}
   shapeshiftPromptOrigin: {fileID: 5159288441355930654}
+  playerPosToBook: {fileID: 0}
 --- !u!1 &4297830791350080503
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,7 +763,7 @@ GameObject:
   - component: {fileID: 6828700256267712357}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

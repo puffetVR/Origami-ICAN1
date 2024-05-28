@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerCurrentGravity { private set; get; }
     private float gravityModifier = 1f;
 
-    private const float positionCacheTick = 2f;
+    private const float positionCacheTick = 1f;
     private float timeSinceLastPosTick = positionCacheTick;
 
     // FLAGS

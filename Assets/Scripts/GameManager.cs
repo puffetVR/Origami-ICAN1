@@ -39,6 +39,16 @@ public class GameManager : MonoBehaviour
     public bool unlockCat = true;
     public bool unlockBird = true;
 
+    public void UnlockBird()
+    {
+        unlockBird = true;
+    }
+
+    public void UnlockCat()
+    {
+        unlockCat = true;
+    }
+
     private void Update()
     {
         // Pause Game Input
