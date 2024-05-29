@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused { get; private set; }
     public bool lockPlayerControl = false;
-    public bool keepPlayerInBounds { get; private set; } = true;
+    public bool keepPlayerInBounds = true;
 
     [Header("Level Stuff")]
     [SerializeField] private int nextLevelIndex;
@@ -39,6 +39,12 @@ public class GameManager : MonoBehaviour
     public bool unlockCat = true;
     public bool unlockBird = true;
 
+
+    public void StripPlayerControl(bool s)
+    {
+        lockPlayerControl = s;
+        keepPlayerInBounds = !s;
+    }
     public void UnlockBird()
     {
         unlockBird = true;
@@ -77,8 +83,9 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator LevelEnd()
     {
-        lockPlayerControl = true;
-        keepPlayerInBounds = false;
+        StripPlayerControl(true);
+        //lockPlayerControl = true;
+        //keepPlayerInBounds = false;
         Player.move.forcedXMovement = 1;
 
         StartCoroutine(LoadNextLevel());

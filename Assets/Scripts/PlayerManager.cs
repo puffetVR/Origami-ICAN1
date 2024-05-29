@@ -254,7 +254,7 @@ public class PlayerManager : MonoBehaviour
     {
 
 
-        GameManager.instance.lockPlayerControl = true;
+        //GameManager.instance.lockPlayerControl = true;
 
         // Move player to pos
         move.forcedXMovement = 1;
@@ -291,7 +291,7 @@ public class PlayerManager : MonoBehaviour
 
 
         rb.isKinematic = false;
-        GameManager.instance.lockPlayerControl = false;
+       // GameManager.instance.lockPlayerControl = false;
 
         yield return null;
     }
