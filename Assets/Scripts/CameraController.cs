@@ -1,9 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     GameManager Game;
     Camera mCam;
+
+    public GameObject shaker;
+    bool shake;
+    float shakePwr;
 
     public bool followTarget = true;
 
@@ -23,6 +28,7 @@ public class CameraController : MonoBehaviour
     public Vector2 camBoundsMin { get; private set; }
     public Vector2 camBoundsMax { get; private set; }
     public Vector2 camCenter { get; private set; }
+
 
     void Start()
     {
@@ -48,6 +54,8 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         if (!IsInit()) return;
+
+        ShakeCameraUpdate();
 
     }
 
@@ -118,4 +126,34 @@ public class CameraController : MonoBehaviour
         cameraPosition = new Vector3(xPos, yPos, -20);
         if (followTarget) transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * cameraFollowSpeed);
     }
+
+    public void ShakeCamera(float t, float str)
+    {
+        StartCoroutine(ShakeCameraRoutine(t, str));
+    }
+
+    IEnumerator ShakeCameraRoutine(float t, float str)
+    {
+        shake = true;
+        shakePwr = str;
+
+        yield return new WaitForSeconds(t);
+
+        shake = false;
+    }
+
+    void ShakeCameraUpdate()
+    {
+        if (shake)
+        {
+            shaker.transform.localPosition = Vector2.zero +
+            new Vector2(Random.Range(-0.1f, 0.1f) * shakePwr,
+                        Random.Range(-0.1f, 0.1f) * shakePwr);
+        }
+
+        else shaker.transform.localPosition = Vector2.MoveTowards(
+            shaker.transform.localPosition,
+            Vector2.zero, Time.deltaTime * cameraFollowSpeed);
+    }
+
 }

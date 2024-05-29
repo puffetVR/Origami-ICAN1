@@ -266,34 +266,41 @@ public class PlayerManager : MonoBehaviour
         move.forcedXMovement = 0;
 
         // When in pos, trigger animation
-        anim.SetTrigger("climb");
+        anim.SetBool("climb", true);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);       
 
         // get book pos
         Vector2 oui = GameObject.Find("BookPos").transform.position;
-        yield return null;
 
         // Make player climb book (kinematic rb, move rb position to above book)
         Rigidbody2D rb = move.GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
 
         rb.position = oui;
+        yield return null;
+        yield return null;
+        anim.SetBool("climb", false);
 
-        yield return new WaitUntil(() => Vector2.Distance(rb.position, oui) == 0);
+        yield return null;
+
+        //yield return new WaitUntil(() => Vector2.Distance(rb.position, oui) == 0);
 
         // Spawn invisible wall so player cant get down from book
         GameObject.Find("BookWall").GetComponent<BoxCollider2D>().enabled = true;
         yield return null;
 
+        rb.isKinematic = false;
+        GameManager.instance.lockPlayerControl = false;
+
         // Lift book up
+        cam.ShakeCamera(.15f, .3f);
         GameObject.Find("Book").GetComponent<Animator>().SetBool("lift", true);
 
         // Level end on shelf
 
 
-        rb.isKinematic = false;
-        GameManager.instance.lockPlayerControl = false;
+
 
         yield return null;
     }
