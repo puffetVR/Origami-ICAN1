@@ -104,11 +104,7 @@ public class PlayerMovement : MonoBehaviour
         isHoldingInteractAfterShapeshift = GameManager.instance.Input.jump && GameManager.instance.Input.shapeshift ? true : isHoldingInteractAfterShapeshift;
         isHoldingInteractAfterShapeshift = GameManager.instance.Input.jumpUp && isHoldingInteractAfterShapeshift ? false : isHoldingInteractAfterShapeshift;
 
-        if (isGrounded)
-        {
-            coyoteTimeCounter = player.data.coyoteTime;
-            //if (hasWallJumpedToFly) hasWallJumpedToFly = false;
-        }
+        if (isGrounded) coyoteTimeCounter = player.data.coyoteTime;
         else coyoteTimeCounter -= Time.deltaTime;
 
         leftTrail.emitting = isBeingPushedUpwards;
@@ -164,9 +160,6 @@ public class PlayerMovement : MonoBehaviour
                 playerCollider.size = new Vector2(player.data.catWidth, 1);
                 break;
             case PlayerShape.FLY:
-
-                //if (hasWallJumped) hasWallJumpedToFly = true;
-
                 playerCollider.size = new Vector2(player.data.catWidth, 1);
                 break;
             default:
@@ -217,9 +210,6 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        // Deprecated, handled by gravity modifier
-        //playerCurrentGravity = isBeingPushedUpwards ? 1f : playerCurrentGravity;
-
         // Clamp Vertical Velocity
         playerBody.velocity = new Vector2(playerBody.velocity.x,
                               Mathf.Clamp(playerBody.velocity.y, Mathf.Abs(player.data.maxFallSpeed) * -1, Mathf.Abs(player.data.maxFallSpeed)));
@@ -227,13 +217,19 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
+
+        // Reduce acceleration if player has recently wall jumped. Reset acceleration when ground is touched
+        accelerationRate = hasWallJumped && !isGrounded && player.playerShape == PlayerShape.CAT ? 0 : player.data.acceleration;
+        accelerationRate = player.playerShape == PlayerShape.FLY ? player.data.airAcceleration : accelerationRate;
+
+        /*
         // Reduce acceleration if player has recently wall jumped. Reset acceleration when ground is touched
         accelerationRate = hasWallJumped && !isGrounded
             || player.playerShape == PlayerShape.FLY ? player.data.airAcceleration : player.data.acceleration;
+        */
 
         float moveDir = GameManager.instance.Input.playerInput.x + forcedXMovement;
 
-        //float moveInput = GameManager.instance.Input.playerInput.x * playerCurrentSpeed;
         float moveInput = moveDir * playerCurrentSpeed;
         float speed = moveInput - playerBody.velocity.x;
         float playerMovement = speed * accelerationRate;
