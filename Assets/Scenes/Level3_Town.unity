@@ -314,7 +314,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7108280284519930186, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 736964621}
   m_SourcePrefab: {fileID: 100100000, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
 --- !u!1001 &96703923
 PrefabInstance:
@@ -1421,13 +1424,52 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1071711936684037406, guid: 862782383f7f8b949b9127b7cc51612b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1687888966}
   m_SourcePrefab: {fileID: 100100000, guid: 862782383f7f8b949b9127b7cc51612b, type: 3}
 --- !u!4 &714009307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8877656790884146815, guid: 862782383f7f8b949b9127b7cc51612b, type: 3}
   m_PrefabInstance: {fileID: 714009306}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &736964619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7108280284519930186, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
+  m_PrefabInstance: {fileID: 70206690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &736964621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736964619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -251963046
+      Data2: 1157772914
+      Data3: -499864157
+      Data4: 1608349434
+    Path: event:/Church
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &756667526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1525,6 +1567,42 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c5037aae952d7b4797cc876cab88be6, type: 3}
+--- !u!1 &761996818 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7146936029910973946, guid: 9f16bf3bb28c3eb4da383ddf21a0614f, type: 3}
+  m_PrefabInstance: {fileID: 689979282476142654}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &761996822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761996818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -839099278
+      Data2: 1095237798
+      Data3: -1753744979
+      Data4: -1524908884
+    Path: event:/Lion
+  Event: 
+  PlayEvent: 12
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &794784236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4287,6 +4365,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2327294644570930078, guid: 26b44a6a03a480b41b52defa9d1d9262, type: 3}
   m_PrefabInstance: {fileID: 1685209464}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1687888965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1071711936684037406, guid: 862782383f7f8b949b9127b7cc51612b, type: 3}
+  m_PrefabInstance: {fileID: 714009306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1687888966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687888965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1270659572
+      Data2: 1245160117
+      Data3: -439698553
+      Data4: 1269441611
+    Path: event:/Chimney
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &1704218339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4881,7 +4995,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7146936029910973946, guid: 9f16bf3bb28c3eb4da383ddf21a0614f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 761996822}
   m_SourcePrefab: {fileID: 100100000, guid: 9f16bf3bb28c3eb4da383ddf21a0614f, type: 3}
 --- !u!1001 &2791596621036907644
 PrefabInstance:
