@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -27,6 +28,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Sprite catSprite;
     [SerializeField] private Sprite flySprite;
 
+    //[SerializeField] private FMOD.Studio.EventInstance poofSound;
+    [SerializeField] private StudioEventEmitter poofSound;
+
     public PlayerShape playerShape
     {
         get { return _playerShape; }
@@ -35,6 +39,7 @@ public class PlayerManager : MonoBehaviour
             if (_playerShape == value) return;
             _playerShape = value;
             poof.Play();
+            poofSound.Play();
             OnPlayerShapeChanged(_playerShape);
         }
     }
@@ -278,7 +283,7 @@ public class PlayerManager : MonoBehaviour
         rb.isKinematic = true;
 
         rb.position = oui;
-        yield return null;
+
         yield return null;
         anim.SetBool("climb", false);
 
