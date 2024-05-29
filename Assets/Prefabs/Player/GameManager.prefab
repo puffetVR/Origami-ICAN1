@@ -58,6 +58,8 @@ MonoBehaviour:
   defaultShape: 0
   unlockCat: 1
   unlockBird: 1
+  stopMusic: 1
+  musicName: 
 --- !u!114 &1022503106443526907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +204,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3208173483373589471, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
+      propertyPath: m_text
+      value: Menu Principal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208173483373589471, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
       propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
@@ -234,8 +240,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4406253723528346860, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
+      propertyPath: m_text
+      value: Reprendre
+      objectReference: {fileID: 0}
+    - target: {fileID: 4406253723528346860, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
       propertyPath: m_fontStyle
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944971619354981194, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8375927254740267470, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
       propertyPath: m_LocalPosition.x
@@ -276,6 +290,10 @@ PrefabInstance:
     - target: {fileID: 8375927254740267470, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835276286441667125, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
+      propertyPath: m_text
+      value: Quitter
       objectReference: {fileID: 0}
     - target: {fileID: 8835276286441667125, guid: ea4b68356384dfd45a6ffabe87c39491, type: 3}
       propertyPath: m_fontStyle

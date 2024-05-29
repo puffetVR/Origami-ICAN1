@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviour
     {
         CalculateBounds();
 
-        cameraPosition = new Vector3(xPos, yPos, -20);
+        cameraPosition = new Vector3(xPos, yPos, -5);
         transform.position = cameraPosition;
 
         currentZoom = cameraZoom;
@@ -123,7 +123,7 @@ public class CameraController : MonoBehaviour
 
     void TargetFollow()
     {
-        cameraPosition = new Vector3(xPos, yPos, -20);
+        cameraPosition = new Vector3(xPos, yPos, -5);
         if (followTarget) transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * cameraFollowSpeed);
     }
 

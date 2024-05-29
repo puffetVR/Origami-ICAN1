@@ -28,8 +28,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Sprite catSprite;
     [SerializeField] private Sprite flySprite;
 
-    //[SerializeField] private FMOD.Studio.EventInstance poofSound;
-    [SerializeField] private StudioEventEmitter poofSound;
 
     public PlayerShape playerShape
     {
@@ -38,8 +36,10 @@ public class PlayerManager : MonoBehaviour
         {
             if (_playerShape == value) return;
             _playerShape = value;
+
             poof.Play();
             poofSound.Play();
+
             OnPlayerShapeChanged(_playerShape);
         }
     }
@@ -51,6 +51,8 @@ public class PlayerManager : MonoBehaviour
         anim.SetLayerWeight(1, 0);
         anim.SetLayerWeight(2, 0);
         anim.SetLayerWeight(3, 0);
+
+        glideSound.Stop();
 
         switch (shape)
         {
@@ -68,6 +70,9 @@ public class PlayerManager : MonoBehaviour
                 //anim.SetLayerWeight(1, 0);
                 break;
             case PlayerShape.FLY:
+                glideSound.Play();
+                glideInstance = glideSound.EventInstance;
+
                 playerSprite.sprite = flySprite;
                 spriteBounds.offset = data.flyBoundsOffset;
                 spriteBounds.size = data.flyBoundsSize;
@@ -107,6 +112,13 @@ public class PlayerManager : MonoBehaviour
 
     public ParticleSystem poof;
 
+
+    [Header("Sounds")]
+    [SerializeField] private StudioEventEmitter poofSound;
+    public StudioEventEmitter glideSound;
+    public FMOD.Studio.EventInstance glideInstance { get; private set; }
+    public EventReference jumpSound;
+    public EventReference wallJumpSound;
     //float t = 0;
 
     void Start()
@@ -137,6 +149,8 @@ public class PlayerManager : MonoBehaviour
             playerShape = PlayerShape.CAT;
             move.ForceVelocity(Vector2.zero);
         }
+
+        glideInstance.setParameterByName("Volume", move.playerVelocity.sqrMagnitude / 100);
 
     }
 

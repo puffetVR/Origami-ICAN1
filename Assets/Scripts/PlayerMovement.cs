@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using Unity.VisualScripting;
 using UnityEngine;
 using static PlayerManager;
@@ -217,7 +218,6 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
-
         // Reduce acceleration if player has recently wall jumped. Reset acceleration when ground is touched
         accelerationRate = hasWallJumped && !isGrounded && player.playerShape == PlayerShape.CAT ? 0 : player.data.acceleration;
         accelerationRate = player.playerShape == PlayerShape.FLY ? player.data.airAcceleration : accelerationRate;
@@ -267,6 +267,8 @@ public class PlayerMovement : MonoBehaviour
             // Ground Jump Logic
             if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
             {
+                FMODUnity.RuntimeManager.CreateInstance(player.jumpSound).start();
+
                 player.anim.SetTrigger("jump");
                 hasJumped = true;
                 player.anim.SetBool("hasJumped", hasJumped);
@@ -282,6 +284,8 @@ public class PlayerMovement : MonoBehaviour
             // Wall Jump Logic
             if (jumpBufferCounter > 0f && GameManager.instance.Input.jumpDown && CanWallJump())
             {
+                FMODUnity.RuntimeManager.CreateInstance(player.wallJumpSound).start();
+
                 player.anim.SetTrigger("jump");
                 hasJumped = true;
                 player.anim.SetBool("hasJumped", hasJumped);

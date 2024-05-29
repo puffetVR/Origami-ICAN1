@@ -9,15 +9,24 @@ EditorBuildSettings:
     path: Assets/Scenes/Level0_MainMenu.unity
     guid: 8c3da041df6daac45b0727f9a654eed6
   - enabled: 1
-    path: Assets/Scenes/Level1_Cutscene.unity
+    path: Assets/Scenes/Level1a_Cutscene.unity
     guid: 0bfba5880ed9764428cabd6d6fe3baaa
   - enabled: 1
-    path: Assets/Scenes/Level1_Intro.unity
+    path: Assets/Scenes/Level1b_Intro.unity
     guid: 3b1d6648417fcd34db66e1d1b15f4c11
   - enabled: 1
-    path: Assets/Scenes/Level2_Forest.unity
+    path: Assets/Scenes/Level1c_Cutscene.unity
+    guid: 086060d5828be7e49be8b4e6274d897f
+  - enabled: 1
+    path: Assets/Scenes/Level2a_Forest.unity
     guid: d65e0c429dfef264ca3286f11fbf9269
   - enabled: 1
-    path: Assets/Scenes/Level3_Town.unity
+    path: Assets/Scenes/Level2b_Cutscene.unity
+    guid: 6181da788ced2214f94a989a6cc12751
+  - enabled: 1
+    path: Assets/Scenes/Level3a_Town.unity
     guid: 7d4ad922d74ae444a9d3276b7e2611df
+  - enabled: 1
+    path: Assets/Scenes/Level3b_Cutscene.unity
+    guid: 40f8663fad4b63a4092a1ce9a3be5157
   m_configObjects: {}

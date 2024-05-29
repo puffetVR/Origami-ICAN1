@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{f118ccb8-c33f-4e6f-bd71-8f45251abe60}">
 		<property name="assetPath">
-			<value>677414__newlocknew__creamnstr_forest-giantwalk-through-the-forestwith-swishes_em.wav</value>
+			<value>Golem/GolemSteps.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

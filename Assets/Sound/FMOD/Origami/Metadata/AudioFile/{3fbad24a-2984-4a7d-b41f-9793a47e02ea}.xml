@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3fbad24a-2984-4a7d-b41f-9793a47e02ea}">
+		<property name="assetPath">
+			<value>197562__dheming__glass_bottles_03.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>73.832979166666661</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{782f119c-bbb6-46b3-87e1-16315b872e7a}</destination>
+		</relationship>
+	</object>
+</objects>

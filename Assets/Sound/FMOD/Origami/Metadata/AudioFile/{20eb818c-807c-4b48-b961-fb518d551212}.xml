@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{20eb818c-807c-4b48-b961-fb518d551212}">
 		<property name="assetPath">
-			<value>618980__mrrap4food__mgm-lion-roar.mp3</value>
+			<value>Lion.mp3</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

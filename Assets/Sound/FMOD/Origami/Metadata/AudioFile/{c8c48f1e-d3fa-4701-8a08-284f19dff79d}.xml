@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c8c48f1e-d3fa-4701-8a08-284f19dff79d}">
+		<property name="assetPath">
+			<value>394790__tlabrant__page-turn.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.3844897959183673</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{782f119c-bbb6-46b3-87e1-16315b872e7a}</destination>
+		</relationship>
+	</object>
+</objects>

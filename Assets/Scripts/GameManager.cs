@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,12 +17,22 @@ public class GameManager : MonoBehaviour
         Player = PlayerManager.instance;
 
         if (fadeInLevel) StartCoroutine(UI.FadeOut());
+
+        music = FindAnyObjectByType<Music>();
+        if (music == null)
+        {
+            GameObject mObj = Instantiate(Resources.Load("Music")) as GameObject;
+            music = mObj.GetComponent<Music>();
+        }
+
     }
     #endregion
 
     public PlayerManager Player;
     public UIManager UI;
     public InputManager Input;
+
+    Music music;
 
     public bool isPaused { get; private set; }
     public bool lockPlayerControl = false;
@@ -39,6 +50,18 @@ public class GameManager : MonoBehaviour
     public bool unlockCat = true;
     public bool unlockBird = true;
 
+    public bool stopMusic = true;
+
+    public string musicName;
+
+    private void Start()
+    {
+        if (music != null && musicName != string.Empty)
+        {
+            Debug.Log("Attemping to play music");
+            music.PlayMusic(musicName);
+        }
+    }
 
     public void StripPlayerControl(bool s)
     {

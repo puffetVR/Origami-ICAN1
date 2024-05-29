@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{268dae63-322d-43e6-983f-5206dbff28bd}">
+		<property name="assetPath">
+			<value>shimmering-object-79354.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>42.624000000000002</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{782f119c-bbb6-46b3-87e1-16315b872e7a}</destination>
+		</relationship>
+	</object>
+</objects>

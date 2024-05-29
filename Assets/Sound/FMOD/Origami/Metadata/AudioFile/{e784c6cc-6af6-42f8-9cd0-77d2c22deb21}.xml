@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{e784c6cc-6af6-42f8-9cd0-77d2c22deb21}">
 		<property name="assetPath">
-			<value>106544__chimerical__marble-church.wav</value>
+			<value>ChurchBell.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

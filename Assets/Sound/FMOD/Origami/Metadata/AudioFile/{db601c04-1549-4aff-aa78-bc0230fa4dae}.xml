@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{db601c04-1549-4aff-aa78-bc0230fa4dae}">
+		<property name="assetPath">
+			<value>407984__judith136__64.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>2.5442176870748301</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{782f119c-bbb6-46b3-87e1-16315b872e7a}</destination>
+		</relationship>
+	</object>
+</objects>
