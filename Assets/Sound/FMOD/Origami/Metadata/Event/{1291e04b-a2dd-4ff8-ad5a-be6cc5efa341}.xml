@@ -70,6 +70,11 @@
 	<object class="GroupTrack" id="{4e99fed2-0ac4-4ba2-8d5d-6e7b7ffb8909}">
 		<relationship name="modules">
 			<destination>{0eb50bd3-09c0-4135-842d-09303b8e4ea0}</destination>
+			<destination>{b9bc83d2-b3b4-45b9-8531-989f5efdc8f8}</destination>
+			<destination>{81519902-f276-447f-9b39-b1b31b986fa8}</destination>
+			<destination>{7a3abdf3-1005-42bc-a7c7-976d4e34a977}</destination>
+			<destination>{f48012f3-28e3-45db-8d2d-d2b37e17217b}</destination>
+			<destination>{620ddf91-a34f-4f07-acc8-6662ae2c6e29}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{c00b7dec-bdf8-4955-b1da-f1ef046e57f6}</destination>
@@ -79,6 +84,11 @@
 		<relationship name="modules">
 			<destination>{a4fcee5c-b28b-416c-b26d-6a6a081e7bbf}</destination>
 			<destination>{0eb50bd3-09c0-4135-842d-09303b8e4ea0}</destination>
+			<destination>{b9bc83d2-b3b4-45b9-8531-989f5efdc8f8}</destination>
+			<destination>{81519902-f276-447f-9b39-b1b31b986fa8}</destination>
+			<destination>{7a3abdf3-1005-42bc-a7c7-976d4e34a977}</destination>
+			<destination>{f48012f3-28e3-45db-8d2d-d2b37e17217b}</destination>
+			<destination>{620ddf91-a34f-4f07-acc8-6662ae2c6e29}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{25a62d7f-77de-42d5-b03c-f997290f9b76}">
@@ -128,10 +138,98 @@
 	</object>
 	<object class="SingleSound" id="{0eb50bd3-09c0-4135-842d-09303b8e4ea0}">
 		<property name="start">
-			<value>3.4000000000000004</value>
+			<value>3.5</value>
 		</property>
 		<property name="length">
-			<value>6.4000000000000004</value>
+			<value>1.5500000000000003</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.081225238964462862</value>
+		</property>
+		<property name="pitch">
+			<value>-3.60000014</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{f118ccb8-c33f-4e6f-bd71-8f45251abe60}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{b9bc83d2-b3b4-45b9-8531-989f5efdc8f8}">
+		<property name="start">
+			<value>5.5500000000000007</value>
+		</property>
+		<property name="length">
+			<value>1.1000000000000005</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>1.3402164429136363</value>
+		</property>
+		<property name="pitch">
+			<value>-3.60000014</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{f118ccb8-c33f-4e6f-bd71-8f45251abe60}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{81519902-f276-447f-9b39-b1b31b986fa8}">
+		<property name="start">
+			<value>6.9500000000000002</value>
+		</property>
+		<property name="length">
+			<value>1.3000000000000007</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>2.2336940715227271</value>
+		</property>
+		<property name="pitch">
+			<value>-3.60000014</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{f118ccb8-c33f-4e6f-bd71-8f45251abe60}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{7a3abdf3-1005-42bc-a7c7-976d4e34a977}">
+		<property name="start">
+			<value>8.6500000000000004</value>
+		</property>
+		<property name="length">
+			<value>1.1531102558839645</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>3.289622178060744</value>
+		</property>
+		<property name="pitch">
+			<value>-3.60000014</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{f118ccb8-c33f-4e6f-bd71-8f45251abe60}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{f48012f3-28e3-45db-8d2d-d2b37e17217b}">
+		<property name="start">
+			<value>10.100000000000001</value>
+		</property>
+		<property name="length">
+			<value>1.1968897441160369</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>4.2262387389262228</value>
+		</property>
+		<property name="pitch">
+			<value>-3.60000014</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{f118ccb8-c33f-4e6f-bd71-8f45251abe60}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{620ddf91-a34f-4f07-acc8-6662ae2c6e29}">
+		<property name="start">
+			<value>11.596889744116037</value>
+		</property>
+		<property name="length">
+			<value>1.0499999999999998</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>5.1984152937256205</value>
 		</property>
 		<property name="pitch">
 			<value>-3.60000014</value>
