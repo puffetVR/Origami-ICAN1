@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_playerShape == value) return;
             _playerShape = value;
+            poof.Play();
             OnPlayerShapeChanged(_playerShape);
         }
     }
@@ -99,7 +100,9 @@ public class PlayerManager : MonoBehaviour
 
     public Transform playerPosToBook;
 
-    float t = 0;
+    public ParticleSystem poof;
+
+    //float t = 0;
 
     void Start()
     {
@@ -253,8 +256,7 @@ public class PlayerManager : MonoBehaviour
     IEnumerator BookCutsceneRoutine()
     {
 
-
-        //GameManager.instance.lockPlayerControl = true;
+        GameManager.instance.lockPlayerControl = true;
 
         // Move player to pos
         move.forcedXMovement = 1;
@@ -275,6 +277,7 @@ public class PlayerManager : MonoBehaviour
         // Make player climb book (kinematic rb, move rb position to above book)
         Rigidbody2D rb = move.GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
+
         rb.position = oui;
 
         yield return new WaitUntil(() => Vector2.Distance(rb.position, oui) == 0);
@@ -284,15 +287,15 @@ public class PlayerManager : MonoBehaviour
         yield return null;
 
         // Lift book up
-        Transform b = GameObject.Find("Book").transform;
-        b.position = new Vector2(b.position.x, .35f);
+        GameObject.Find("Book").GetComponent<Animator>().SetBool("lift", true);
 
         // Level end on shelf
 
 
         rb.isKinematic = false;
-       // GameManager.instance.lockPlayerControl = false;
+        GameManager.instance.lockPlayerControl = false;
 
         yield return null;
     }
+
 }
