@@ -48,13 +48,13 @@ public class CutsceneManager : MonoBehaviour
         // Has done fading or skipped?
         yield return null;
         yield return new WaitUntil(() => GameManager.instance.UI.hasFadedOut
-        || GameManager.instance.Input.jumpDown && !GameManager.instance.UI.hasFadedOut);
+        || !GameManager.instance.isPaused && GameManager.instance.Input.jumpDown && !GameManager.instance.UI.hasFadedOut);
 
         GameManager.instance.UI.hasFadedOut = true;
         skipPrompt.SetActive(true);
 
         yield return null;
-        yield return new WaitUntil(() => GameManager.instance.Input.jumpDown);
+        yield return new WaitUntil(() => !GameManager.instance.isPaused && GameManager.instance.Input.jumpDown);
 
         skipPrompt.SetActive(false);
 
@@ -71,7 +71,7 @@ public class CutsceneManager : MonoBehaviour
         // Has done fading or skipped?
         yield return null;
         yield return new WaitUntil(() => GameManager.instance.UI.hasFadedIn
-        || GameManager.instance.Input.jumpDown && !GameManager.instance.UI.hasFadedIn);
+        || !GameManager.instance.isPaused && GameManager.instance.Input.jumpDown && !GameManager.instance.UI.hasFadedIn);
 
         GameManager.instance.UI.hasFadedIn = true;
 
