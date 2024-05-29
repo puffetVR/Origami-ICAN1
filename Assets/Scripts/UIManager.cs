@@ -30,6 +30,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject shapeshiftPrompt;
 
+    //public UIElement shapeshiftElement;
+    //public UIElement interactionElement;
+
     public GameObject pauseMenu;
     public Image fader;
     public bool hasFadedIn = false;
@@ -57,12 +60,9 @@ public class UIManager : MonoBehaviour
     private void FixedUpdate()
     {
         if (PlayerManager.instance) shapeshiftPrompt.transform.position = PlayerManager.instance.shapeshiftPromptOrigin.position;
+        //if (PlayerManager.instance) shapeshiftElement.transform.position = PlayerManager.instance.shapeshiftPromptOrigin.position;
     }
 
-    private void LateUpdate()
-    {
-        //if (hasFadedIn) hasFadedIn = false;
-    }
     public void RefreshUI()
     {
         GameManager.instance.PauseGame(GameManager.instance.isPaused);
@@ -91,9 +91,6 @@ public class UIManager : MonoBehaviour
         {
             item.SetUISprite(currentSchemeData);
         }
-
-        //interactionPromptSprite.sprite = currentSchemeData.interactKey;
-        //shapeshiftPromptSprite.sprite = currentSchemeData.shapeshiftKey;
     }
 
     public void RefreshInteractionPrompt(bool state)
@@ -103,7 +100,12 @@ public class UIManager : MonoBehaviour
 
         unactiveCross.SetActive(!interactionActive);
         interactionPrompt.SetActive(state);
-        //shapeshiftPrompt.SetActive(state && !interactionActive ? true : false);
+        //if (state && state == interactionActive) interactionElement.Appear();
+        //else
+        //{
+        //    interactionElement.Disappear();
+        //    unactiveCross.SetActive(false);
+        //}
         RefreshShapeshiftPrompt();
     }
 
@@ -115,6 +117,8 @@ public class UIManager : MonoBehaviour
             || PlayerManager.instance.move.isInAirZone && PlayerManager.instance.playerShape != PlayerManager.PlayerShape.FLY && GameManager.instance.unlockBird
             ? true : false;
 
+        //if (state) shapeshiftElement.Appear();
+        //else shapeshiftElement.Disappear();
         shapeshiftPrompt.SetActive(state);
     }
 

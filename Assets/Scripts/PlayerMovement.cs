@@ -396,13 +396,6 @@ public class PlayerMovement : MonoBehaviour
     #region Trigger Stuff (LevelEnd, Air Zone)
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("OutsideInside"))
-        {
-            OutsideInside oui = collision.GetComponent<OutsideInside>();
-
-            if (oui) oui.isInside = false;
-        }
-
         if (!collision.CompareTag("Pusher")) return;
 
         isInAirZone = false;
@@ -442,13 +435,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("AAAA");
 
             StartCoroutine(GameManager.instance.KillPlayer());
-        }
-
-        if (collision.CompareTag("OutsideInside"))
-        {
-            OutsideInside oui = collision.GetComponent<OutsideInside>();
-                
-            if (oui) oui.isInside = true;
         }
 
     }

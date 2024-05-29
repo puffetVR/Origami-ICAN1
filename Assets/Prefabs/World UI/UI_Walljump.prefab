@@ -188,6 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eType: 2
   image: {fileID: 8040215394048479814}
+  text: {fileID: 8611592147671771685}
 --- !u!1 &8266874197491602586
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +273,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7982529543608227234
 MonoBehaviour:
   m_ObjectHideFlags: 0
