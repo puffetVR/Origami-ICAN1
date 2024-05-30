@@ -183,7 +183,7 @@ MonoBehaviour:
   m_text: "\nMerci d'avoir fait\nd\xE9couvrir le monde\n\xE0 Papier."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faa4575e1b853bb47ab90120f598ef12, type: 2}
-  m_sharedMaterial: {fileID: 5621476468245058383, guid: faa4575e1b853bb47ab90120f598ef12, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 5367f5162deb07f45a2f8d3a38f84dfb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -456,7 +456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 103}
+  m_AnchoredPosition: {x: 0.000030517578, y: 103}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &221106499
@@ -479,10 +479,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Cr\xE9dits\n\nL\xE9a Delohen\nIlliass Bouhou\nJoshua Bisson\nNathan Milon"
+  m_text: "R\xE9alis\xE9 par\n\nL\xE9a Delohen\nIlliass Bouhou\nJoshua Bisson\nNathan
+    Milon"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faa4575e1b853bb47ab90120f598ef12, type: 2}
-  m_sharedMaterial: {fileID: 5621476468245058383, guid: faa4575e1b853bb47ab90120f598ef12, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 5367f5162deb07f45a2f8d3a38f84dfb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -763,9 +764,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 221106498}
   - {fileID: 133530157}
   - {fileID: 2119743280}
+  - {fileID: 221106498}
   m_Father: {fileID: 152441960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -1948,7 +1949,7 @@ MonoBehaviour:
   m_text: fin.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faa4575e1b853bb47ab90120f598ef12, type: 2}
-  m_sharedMaterial: {fileID: 5621476468245058383, guid: faa4575e1b853bb47ab90120f598ef12, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 5367f5162deb07f45a2f8d3a38f84dfb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
