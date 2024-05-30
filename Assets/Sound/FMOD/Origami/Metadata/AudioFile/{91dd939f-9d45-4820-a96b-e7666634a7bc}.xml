@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{91dd939f-9d45-4820-a96b-e7666634a7bc}">
 		<property name="assetPath">
-			<value>381823__plantmonkey__storm-doris-comes-down-the-chimney.wav</value>
+			<value>Glide.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

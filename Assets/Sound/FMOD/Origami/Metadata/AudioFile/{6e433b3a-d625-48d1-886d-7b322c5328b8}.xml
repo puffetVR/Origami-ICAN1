@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{6e433b3a-d625-48d1-886d-7b322c5328b8}">
 		<property name="assetPath">
-			<value>543685__nox_sound__footsteps_wood_walk_mono.wav</value>
+			<value>WoodFootsteps.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{fbd0cb73-98c0-40c8-b1ef-10ad5b831df6}">
 		<property name="assetPath">
-			<value>499570__hope-sounds__birds-taking-off-to-fly.mp3</value>
+			<value>BirdsFly.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

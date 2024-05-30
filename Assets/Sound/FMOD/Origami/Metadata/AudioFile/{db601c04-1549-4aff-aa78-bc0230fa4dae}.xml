@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{db601c04-1549-4aff-aa78-bc0230fa4dae}">
 		<property name="assetPath">
-			<value>407984__judith136__64.wav</value>
+			<value>Liquid.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

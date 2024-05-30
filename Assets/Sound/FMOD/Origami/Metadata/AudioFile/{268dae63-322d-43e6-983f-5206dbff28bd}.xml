@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{268dae63-322d-43e6-983f-5206dbff28bd}">
 		<property name="assetPath">
-			<value>shimmering-object-79354.mp3</value>
+			<value>Sparkles.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

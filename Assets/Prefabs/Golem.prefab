@@ -4862,6 +4862,69 @@ Transform:
   - {fileID: 8394854043483027954}
   m_Father: {fileID: 1682417765190539642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5764846153023588527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4427853093005612265}
+  - component: {fileID: 8117898574973470196}
+  m_Layer: 0
+  m_Name: GolemGrowl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4427853093005612265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764846153023588527}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6433018823306571142}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8117898574973470196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764846153023588527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 311550027
+      Data2: 1341694685
+      Data3: 1824414381
+      Data4: 1101262789
+    Path: event:/Interacts/Golem
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &5896557612720776604
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,15 +5067,15 @@ MonoBehaviour:
     Path: event:/Interacts/Golem Step
   Event: 
   PlayEvent: 0
-  StopEvent: 0
+  StopEvent: 2
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 1
-  OverrideMinDistance: 23.6
-  OverrideMaxDistance: 100
+  OverrideMinDistance: 27.1
+  OverrideMaxDistance: 52.43
 --- !u!1 &6895967374648166367
 GameObject:
   m_ObjectHideFlags: 0
@@ -5250,7 +5313,7 @@ PrefabInstance:
     - target: {fileID: 2407000746842360982, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
       propertyPath: OnInteract.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
-      objectReference: {fileID: 41102666232981169}
+      objectReference: {fileID: 8117898574973470196}
     - target: {fileID: 2407000746842360982, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
       propertyPath: OnInteract.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -5393,13 +5456,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2143116368315137633, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4172262445681987171}
+    - targetCorrespondingSourceObject: {fileID: 2143116368315137633, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4427853093005612265}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8633992296931636375, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3388735586454176300}
-    - targetCorrespondingSourceObject: {fileID: 8633992296931636375, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 41102666232981169}
     - targetCorrespondingSourceObject: {fileID: 8633992296931636375, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5722498401702246505}
@@ -5421,37 +5484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d911be418192fb45bdd5672dbdd4940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &41102666232981169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686572662940297072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 311550027
-      Data2: 1341694685
-      Data3: 1824414381
-      Data4: 1101262789
-    Path: event:/Interacts/Golem
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!114 &5722498401702246505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5480,9 +5512,9 @@ MonoBehaviour:
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  OverrideAttenuation: 1
+  OverrideMinDistance: 7.3
+  OverrideMaxDistance: 17.42
 --- !u!4 &6433018823306571142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2143116368315137633, guid: d4355220bad4dde4792e4da2ba9b9b02, type: 3}

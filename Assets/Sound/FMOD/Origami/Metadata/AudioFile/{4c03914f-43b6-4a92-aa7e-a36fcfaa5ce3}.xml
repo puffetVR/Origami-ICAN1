@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{4c03914f-43b6-4a92-aa7e-a36fcfaa5ce3}">
 		<property name="assetPath">
-			<value>80928__bennstir__door-slam-1.wav</value>
+			<value>DoorSlam.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

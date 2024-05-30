@@ -93,7 +93,7 @@
 	<object class="MixerBusPanner" id="{a9fe95e1-c6aa-41d4-858f-091ea7d68c68}" />
 	<object class="SingleSound" id="{dd10bfb5-cdb2-4cec-bb58-63b749998d5d}">
 		<property name="length">
-			<value>34.5</value>
+			<value>25</value>
 		</property>
 		<property name="looping">
 			<value>true</value>
@@ -124,7 +124,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>34.5</value>
+			<value>25</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{996d359b-707e-48e4-a71d-fc74523efb06}</destination>

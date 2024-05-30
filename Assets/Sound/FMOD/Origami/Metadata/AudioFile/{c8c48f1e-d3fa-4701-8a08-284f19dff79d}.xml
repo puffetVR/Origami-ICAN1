@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{c8c48f1e-d3fa-4701-8a08-284f19dff79d}">
 		<property name="assetPath">
-			<value>394790__tlabrant__page-turn.mp3</value>
+			<value>PageTurn.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

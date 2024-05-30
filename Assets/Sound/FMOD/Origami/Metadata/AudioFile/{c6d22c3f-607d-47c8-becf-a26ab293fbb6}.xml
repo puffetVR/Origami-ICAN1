@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{c6d22c3f-607d-47c8-becf-a26ab293fbb6}">
 		<property name="assetPath">
-			<value>563727__entagon__bottle-shake.mp3</value>
+			<value>BottleShake.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>32</value>

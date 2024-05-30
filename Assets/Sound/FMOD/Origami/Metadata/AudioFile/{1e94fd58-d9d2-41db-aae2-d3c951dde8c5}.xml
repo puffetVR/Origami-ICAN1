@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{1e94fd58-d9d2-41db-aae2-d3c951dde8c5}">
 		<property name="assetPath">
-			<value>86977__markb__chimney.wav</value>
+			<value>Chimney.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

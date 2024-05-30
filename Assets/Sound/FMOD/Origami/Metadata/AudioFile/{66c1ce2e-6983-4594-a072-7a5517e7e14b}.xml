@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{66c1ce2e-6983-4594-a072-7a5517e7e14b}">
 		<property name="assetPath">
-			<value>710752__klankbeeld__backswimmer-under-water-1.wav</value>
+			<value>River.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

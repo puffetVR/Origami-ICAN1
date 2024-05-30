@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{cb87fbe6-d59d-43a4-8d19-5122c16fb1e6}">
 		<property name="assetPath">
-			<value>Music/the-lights-of-the-village-190674.mp3</value>
+			<value>Music/CityMusic.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

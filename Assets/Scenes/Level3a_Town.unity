@@ -256,18 +256,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 783119904327900389, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.7705008
-      objectReference: {fileID: 0}
-    - target: {fileID: 783119904327900389, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.7705008
-      objectReference: {fileID: 0}
-    - target: {fileID: 783119904327900389, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.7705008
-      objectReference: {fileID: 0}
-    - target: {fileID: 783119904327900389, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 237
       objectReference: {fileID: 0}
@@ -313,17 +301,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 783119904327900389, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1510433903}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
---- !u!4 &70206691 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 783119904327900389, guid: f8ea4448fbd68ba4eab4f65b349529bb, type: 3}
-  m_PrefabInstance: {fileID: 70206690}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &96703923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3829,69 +3809,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8138440538288562997, guid: d5ec9648f0e30e44dacdab8066e0bb81, type: 3}
   m_PrefabInstance: {fileID: 1475709154}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1510433902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1510433903}
-  - component: {fileID: 1510433904}
-  m_Layer: 7
-  m_Name: Bell sound
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1510433903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510433902}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.23, y: 10.76, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 70206691}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1510433904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510433902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -2035066371
-      Data2: 1279629709
-      Data3: 1583027342
-      Data4: -463958668
-    Path: event:/Env/Bell
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 1
-  OverrideMinDistance: 17.23294
-  OverrideMaxDistance: 206.49997
 --- !u!1001 &1574922560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5024,10 +4941,6 @@ PrefabInstance:
     - target: {fileID: 2415166907718950639, guid: 9f16bf3bb28c3eb4da383ddf21a0614f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628093858671868957, guid: 9f16bf3bb28c3eb4da383ddf21a0614f, type: 3}
-      propertyPath: EventReference.Path
-      value: event:/Interacts/Lion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

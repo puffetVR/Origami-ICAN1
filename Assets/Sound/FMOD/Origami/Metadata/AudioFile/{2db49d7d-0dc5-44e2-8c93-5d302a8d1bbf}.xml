@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{2db49d7d-0dc5-44e2-8c93-5d302a8d1bbf}">
 		<property name="assetPath">
-			<value>594176__emmalyons1__crunching-twigs.wav</value>
+			<value>Twigs.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

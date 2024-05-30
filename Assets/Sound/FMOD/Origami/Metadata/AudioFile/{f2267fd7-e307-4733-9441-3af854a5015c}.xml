@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{f2267fd7-e307-4733-9441-3af854a5015c}">
 		<property name="assetPath">
-			<value>335509__newagesoup__writing-long-sketch-01.wav</value>
+			<value>Write.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>48</value>

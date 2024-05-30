@@ -85,7 +85,7 @@ MonoBehaviour:
       Data2: 1095237798
       Data3: -1753744979
       Data4: -1524908884
-    Path: event:/Lion
+    Path: event:/Interacts/Lion
   Event: 
   PlayEvent: 0
   StopEvent: 0

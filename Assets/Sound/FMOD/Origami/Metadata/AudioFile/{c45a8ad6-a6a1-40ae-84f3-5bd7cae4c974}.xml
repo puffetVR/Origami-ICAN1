@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{c45a8ad6-a6a1-40ae-84f3-5bd7cae4c974}">
 		<property name="assetPath">
-			<value>441930__180149__cat-purring-various.wav</value>
+			<value>Cat/CatPurr.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

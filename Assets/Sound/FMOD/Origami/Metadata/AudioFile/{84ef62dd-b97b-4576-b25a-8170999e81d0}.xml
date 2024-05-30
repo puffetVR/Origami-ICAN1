@@ -2,7 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{84ef62dd-b97b-4576-b25a-8170999e81d0}">
 		<property name="assetPath">
-			<value>368130__drummerman__clinking-glasses.wav</value>
+			<value>GlassBottles2.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
